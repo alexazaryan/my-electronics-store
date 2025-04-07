@@ -1,0 +1,159 @@
+.menu {
+   position: fixed;
+   top: 0;
+   right: -350px;
+   width: 350px;
+   height: 100vh; /* Занимает всю высоту экрана */
+   background: white;
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   transition: right 0.3s ease-in-out;
+   z-index: 1001;
+   /* padding: 20px; */
+   border-radius: 10px 0 0 10px;
+   overflow-y: auto; /* Разрешаем прокрутку внутри меню */
+   scrollbar-width: none; /* Скрываем полосу прокрутки в Firefox */
+}
+
+.menu__collection {
+   padding: 20px;
+}
+
+/* Скрываем полосу прокрутки внутри меню */
+.menu::-webkit-scrollbar {
+   width: 0; /* Скрываем полосу прокрутки в Chrome/Safari */
+}
+
+.menu.visible {
+   right: 0; /* Меню появляется */
+}
+
+/* Затемнение фона */
+.overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.5);
+   z-index: 1000;
+   opacity: 0; /* Начальная прозрачность */
+   transition: opacity 0.3s ease-in-out; /* Плавное изменение прозрачности */
+   pointer-events: none; /* Чтобы overlay не блокировал клики, когда прозрачный */
+}
+
+.overlay.active {
+   opacity: 1; /* Полная видимость */
+   pointer-events: auto; /* Разрешаем клики, когда overlay видим */
+}
+
+.customButtonMenu {
+   margin: 20px 0;
+   padding: 10px;
+   border-radius: 10px;
+   transition: background-color 0.2s ease;
+}
+
+.menu__custom-button-close {
+   background-color: red;
+   width: 100%;
+   padding: 10px;
+   margin: 0 0 20px;
+   background-color: #6e41e2;
+   border-radius: 10px 0 10px 10px;
+   font-size: 20px;
+   color: white;
+   transition: background-color 0.2s ease;
+}
+
+.menu__custom-button-close:hover,
+.customButtonMenu:hover {
+   background-color: #4f29b1;
+}
+
+.menu-language {
+   border-top: 1px solid gray;
+   border-bottom: 1px solid gray;
+}
+
+.shop-soon {
+   background-color: rgb(223, 15, 15);
+   color: white;
+   padding: 5px;
+   margin-left: auto;
+   border-radius: 10px;
+}
+
+.category-panel,
+.news-panel,
+.settings-panel,
+.orders-panel,
+.shop-panel,
+.telegram-panel,
+.favorites-panel,
+.menu-language,
+.admin-panel {
+   display: flex;
+   align-items: center;
+   padding: 20px;
+}
+
+.category-panel:hover p,
+.news-panel:hover p,
+.settings-panel:hover p,
+.orders-panel:hover p,
+.telegram-panel:hover p,
+.favorites-panel:hover p,
+.menu-language:hover p,
+.admin-panel:hover p {
+   cursor: pointer;
+   text-decoration: underline; /* Подчёркивание при наведении */
+}
+
+.category-icon,
+.news-icon,
+.settings-icon,
+.orders-icon,
+.shop-icon,
+.telegram-icon,
+.favorites-icon,
+.admin-icon,
+.globe-icon {
+   font-size: 25px;
+}
+
+.category-text,
+.news-text,
+.settings-text,
+.orders-text,
+.shop-text,
+.telegram-text,
+.favorites-text,
+.admin-text,
+.language-text {
+   margin-left: 10px;
+}
+
+.shop-text {
+   cursor: not-allowed;
+}
+
+/* ======================================= */
+.favorites-panel__box,
+.news-text-wrapper {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+}
+
+.favorites-count,
+.news-count {
+   background-color: red;
+   color: white;
+   font-size: 12px;
+   font-weight: bold;
+   border-radius: 50%;
+   padding: 3px 8px;
+   min-width: 20px;
+   text-align: center;
+   line-height: 1;
+}

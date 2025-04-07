@@ -1,0 +1,105 @@
+.product-form {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 20px;
+}
+
+.product-form__title {
+   text-align: center;
+   font-size: 2rem;
+   color: red;
+   margin-bottom: 10px;
+}
+
+.form__up-load {
+   max-width: 500px;
+   padding: 20px;
+   background-color: antiquewhite;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.form__up-load--component {
+   margin: 20px 0;
+}
+
+.form {
+   max-width: 500px;
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+   padding: 20px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.2);
+   background-color: antiquewhite;
+}
+
+.form__field {
+   cursor: "pointer";
+   display: flex;
+   flex-direction: column;
+}
+
+.form__label {
+   font-weight: bold;
+   margin-bottom: 5px;
+}
+
+.form__input {
+   padding: 8px;
+   font-size: 14px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+}
+
+.form__fileInput {
+   padding: 8px;
+   font-size: 14px;
+}
+
+.form-wrap__add-img {
+   margin-top: 10px;
+   width: 100px;
+   height: 100px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: white;
+}
+
+.form__image {
+   width: 100%;
+   height: 100%;
+}
+
+.form__error {
+   color: red;
+   font-size: 14px;
+}
+
+.form__success {
+   color: green;
+   font-size: 14px;
+}
+
+.form__submit {
+   padding: 10px;
+   background-color: #4caf50;
+   color: white;
+   font-size: 16px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.form__submit:hover {
+   background-color: #45a049;
+}
+
+/* подсветка не заполненого поля */
+
+.form__input--error {
+   border: 2px solid red;
+}
+
+.form__fileInput--error {
+   border: 2px solid red;
+}

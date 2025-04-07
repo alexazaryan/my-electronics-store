@@ -1,0 +1,63 @@
+/* Контейнер для кругов */
+.spinner {
+   position: relative;
+   width: 300px; /* Диаметр внешнего круга */
+   height: 300px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: auto;
+}
+
+/* Базовые стили кругов */
+.circle {
+   position: absolute;
+   border-radius: 50%;
+   border: 5px solid transparent; /* Прозрачная часть */
+   border-top-color: currentColor; /* Видимая часть */
+   border-left-color: currentColor; /* Видимая часть */
+   border-right-color: currentColor; /* Видимая часть */
+   animation: spin infinite linear;
+}
+
+/* Жёлтый круг */
+.circle.little {
+   width: 100px;
+   height: 100px;
+   color: wheat;
+   animation-duration: 0.5s; /* Скорость вращения */
+}
+
+/* Малый круг */
+.circle.small {
+   width: 150px;
+   height: 150px;
+   color: red;
+   animation-duration: 1s;
+}
+
+/* Средний круг */
+.circle.medium {
+   width: 200px;
+   height: 200px;
+   color: green;
+   animation-duration: 1.5s;
+}
+
+/* Большой круг */
+.circle.large {
+   width: 250px;
+   height: 250px;
+   color: blue;
+   animation-duration: 2s;
+}
+
+/* Анимация вращения */
+@keyframes spin {
+   from {
+      transform: rotate(0deg);
+   }
+   to {
+      transform: rotate(360deg);
+   }
+}

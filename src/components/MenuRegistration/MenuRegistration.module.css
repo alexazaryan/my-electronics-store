@@ -1,0 +1,30 @@
+.menu-registration {
+   position: fixed;
+   top: 0;
+   right: -350px;
+   width: 350px;
+   height: calc(100vh - 0px);
+   background: rgb(232, 221, 221);
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   transition: right 0.3s ease-in-out;
+   z-index: 1002;
+   border-radius: 10px 0 0 10px;
+}
+
+.menu-registration.visible {
+   right: 0;
+}
+
+.menu-registration__btn {
+   display: flex;
+   align-items: center;
+   gap: 10px; /* Отступ между крестиком и текстом */
+   border-radius: 0 0 10px 10px;
+   margin: 0;
+   padding: 10px;
+   transition: background-color 0.2s ease;
+}
+
+.menu-registration__btn:hover {
+   background-color: #4f29b1;
+}

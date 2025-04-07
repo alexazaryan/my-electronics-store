@@ -1,0 +1,135 @@
+.header__wrap {
+   display: flex;
+   text-align: center;
+   justify-content: center;
+   margin: 0 auto;
+   width: 100%;
+   max-width: 1600px;
+}
+
+.header {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   display: flex;
+   justify-content: space-between;
+
+   /* padding-right: var(--scrollbar-width, 20px) !important; */
+   padding-right: var(
+      --scrollbar-width,
+      0
+   ); /* Используем CSS-переменную */ /* Компенсируем скроллбар */
+   align-items: center;
+   padding: 10px 20px;
+   background-color: white;
+   z-index: 1000;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   width: calc(100vw - var(--scrollbar-width, 0px));
+}
+
+.icon {
+   padding: 10px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.header__center {
+   flex: 1;
+   margin: 0 20px;
+}
+
+.icon {
+   margin-left: 15px;
+   cursor: pointer;
+}
+
+.icon img {
+   width: 24px;
+   height: 24px;
+}
+
+.logo__header img {
+   height: 40px;
+}
+
+.searchContainer {
+   position: relative; /* Для z-index */
+   z-index: 1000; /* Поле ввода и кнопка поверх затемнения */
+   display: flex;
+   align-items: center;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+   overflow: hidden;
+   width: 100%; /* Ширина контейнера */
+}
+
+.searchInput {
+   width: 100%;
+   border: 1px solid #ccc;
+   border-radius: 8px 0 0 8px;
+   flex: 1; /* Занимает всё доступное пространство */
+   border: none;
+   padding: 10px;
+   outline: none; /* Убираем обводку при фокусе */
+}
+
+.searchButton {
+   color: white; /* Цвет текста */
+   padding: 8px 16px; /* Отступы внутри кнопки */
+   cursor: pointer; /* Указатель при наведении */
+   font-size: 14px; /* Размер текста */
+   background-color: #6e41e2;
+   transition: background-color 0.2s ease;
+}
+
+.searchButton:hover {
+   background-color: #4f29b1;
+}
+
+/* затемнение экрана */
+.darkOverlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный */
+   z-index: 999;
+   opacity: 0;
+   visibility: hidden;
+   transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.darkOverlay.show {
+   opacity: 1;
+   visibility: visible;
+}
+
+.icon-favorites {
+   position: relative;
+}
+.header__favorite-count {
+   position: absolute;
+   left: 70%;
+   top: 3%;
+   color: red;
+   font-weight: bold;
+}
+
+.header__left,
+.header__center,
+.header__right {
+   display: flex;
+   align-items: center;
+}
+
+.icon-account:hover,
+.icon-favorites:hover,
+.icon-cart:hover {
+   background-color: #f0f0f0; /* Серый цвет фона */
+   border-radius: 4px; /* Закругленные углы */
+   transition: background-color 0.3s ease; /* Плавный переход */
+}

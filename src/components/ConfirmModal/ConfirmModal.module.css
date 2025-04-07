@@ -1,0 +1,30 @@
+.confirm-modal {
+   position: fixed;
+   z-index: 1;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   padding: 30px;
+   text-align: center;
+   border-radius: 7px;
+   background: rgb(215, 95, 86);
+}
+
+.confirm-modal__buttons-wrap {
+   display: flex;
+   justify-content: center;
+}
+
+.confirm-modal__button {
+   flex: 1;
+   border-radius: 7px;
+   padding: 5px;
+   margin: 5px;
+   background-color: green;
+   transition: background 2s;
+}
+
+.confirm-modal__button:hover {
+   background-color: palegreen;
+   cursor: pointer;
+}

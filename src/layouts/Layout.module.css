@@ -1,0 +1,27 @@
+.container {
+   display: flex;
+   flex-direction: column;
+   min-height: 100vh;
+}
+
+.header-wrapper,
+.footer-wrapper {
+   width: 100%;
+   background-color: red;
+}
+
+.header,
+.footer {
+   max-width: 1600px; /* Ограничение по ширине */
+   width: 100%;
+   margin: 0 auto; /* Центрирование */
+   padding: 0 20px; /* Отступы по бокам */
+}
+
+.main-content {
+   flex: 1;
+   max-width: 1600px;
+   width: 100%;
+   margin: 0 auto;
+   padding: 90px 20px 20px;
+}

@@ -1,0 +1,45 @@
+.editor-container {
+   max-width: 500px;
+   margin: auto;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 12px;
+   background-color: antiquewhite;
+}
+
+.editor-title {
+   font-size: 1.5rem;
+   font-weight: bold;
+   margin-bottom: 20px;
+}
+
+.editor-input,
+.editor-textarea {
+   width: 100%;
+   padding: 10px;
+   margin-bottom: 16px;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+   font-size: 1rem;
+   box-sizing: border-box;
+}
+
+.editor-textarea {
+   height: 160px;
+   resize: none;
+}
+
+.editor-button {
+   background-color: #2563eb;
+   color: white;
+   padding: 10px 16px;
+   border: none;
+   border-radius: 8px;
+   font-size: 1rem;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
+}
+
+.editor-button:hover {
+   background-color: #1e40af;
+}

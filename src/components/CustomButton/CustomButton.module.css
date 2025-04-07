@@ -1,0 +1,15 @@
+.defaultButton {
+   background-color: #6e41e2;
+   padding: 5px 10px;
+   border-radius: 50px;
+   cursor: pointer;
+   text-align: center;
+   color: white;
+   margin: 5px 0;
+
+   transition: background-color 0.2s ease;
+}
+
+.defaultButton:hover {
+   background-color: #4f29b1;
+}

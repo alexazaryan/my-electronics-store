@@ -1,0 +1,40 @@
+.news-feed {
+   padding: 20px;
+}
+
+.news-item {
+   margin-bottom: 20px;
+   padding-bottom: 10px;
+   border-bottom: 1px solid #ddd;
+}
+
+.news-title {
+   font-size: 1.2rem;
+   font-weight: bold;
+   margin-bottom: 6px;
+}
+
+.news-content {
+   margin-bottom: 4px;
+}
+
+.news-date {
+   font-size: 0.85rem;
+   color: #666;
+}
+
+.delete-button {
+   margin-top: 8px;
+   background-color: #dc2626;
+   color: white;
+   margin-left: 20px;
+   padding: 6px 12px;
+   border: none;
+   border-radius: 6px;
+   cursor: pointer;
+   font-size: 0.9rem;
+}
+
+.delete-button:hover {
+   background-color: #b91c1c;
+}

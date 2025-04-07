@@ -1,0 +1,36 @@
+.news-section {
+   position: fixed;
+   top: 0;
+   right: -350px; /* Начальное положение за пределами экрана */
+   width: 350px;
+   height: calc(100vh - 0px);
+   background-color: rgb(247, 167, 223);
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   transition: right 0.3s ease-in-out;
+   z-index: 1003; /* Убедимся, что он выше других компонентов */
+   border-radius: 10px 0 0 10px;
+}
+
+.news-section.visible {
+   right: 0; /* Появляется */
+}
+
+.news-section__custom-button-close {
+   width: 100%;
+   padding: 10px;
+   margin: 0 0 20px;
+   background-color: #6e41e2;
+   border-radius: 10px 0 10px 10px;
+   font-size: 1.25rem;
+   color: white;
+}
+
+.news-section__wrap::-webkit-scrollbar {
+   display: none; /* скрывает полосу прокрутки */
+}
+
+.news-section__wrap {
+   overflow-y: auto;
+   height: calc(100vh - 80px);
+   padding: 20px;
+}

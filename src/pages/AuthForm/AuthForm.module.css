@@ -1,0 +1,92 @@
+.auth-form-container {
+   max-width: 400px;
+   margin: 0 auto;
+   padding: 0 20px 80px 20px;
+
+   height: 100vh; /* чтобы занять всю высоту экрана */
+   overflow-y: auto; /* включаем вертикальную прокрутку */
+}
+
+.auth-form-container::-webkit-scrollbar {
+   display: none; /* скрываем полосу прокрутки */
+}
+
+.auth-form-container > p {
+   margin: 15px 0;
+}
+
+.auth-form-container__value {
+   padding: 0 10px;
+}
+
+.auth-form {
+   display: flex;
+   flex-direction: column;
+}
+
+.auth-form-title {
+   text-align: center;
+}
+
+.auth-form-group {
+   margin-bottom: 15px;
+   display: flex;
+   flex-direction: column;
+}
+
+.auth-form-group__email,
+.auth-form-group__password {
+   padding: 10px;
+   border-radius: 7px;
+   margin-top: 5px;
+   border: none;
+}
+
+.auth-form-error {
+   visibility: hidden; /* По умолчанию скрываем */
+   min-height: 20px; /* Резервируем место */
+}
+
+.auth-form-error.visible {
+   visibility: visible;
+}
+
+.auth-form-button {
+   padding: 10px;
+   background-color: #6e41e2;
+   width: 100%;
+   color: #fff;
+   border: none;
+   border-radius: 7px;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
+}
+
+.auth-form-toggle {
+   text-align: center;
+   margin-top: 10px;
+}
+
+.auth-form-toggle-link {
+   color: rgb(232, 89, 89);
+   cursor: pointer;
+   margin: 0 10px;
+}
+
+.auth-form-container__wrap-welcome-emoji-img {
+   max-width: 550px;
+}
+
+.auth-form-container__welcome-emoji-img {
+   object-fit: cover;
+   width: 100%;
+}
+
+.auth-form-container__wrap-emoji-pointer {
+   max-width: 550px;
+}
+
+.auth-form-container__emoji-pointer {
+   object-fit: cover;
+   width: 100%;
+}

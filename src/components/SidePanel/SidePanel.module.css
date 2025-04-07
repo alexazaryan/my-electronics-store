@@ -1,0 +1,87 @@
+.side-panel__wrap {
+   background-color: rgb(221, 177, 254); /* фон панели */
+   position: fixed;
+   top: 0;
+   right: -350px;
+   width: 350px;
+   height: 100vh;
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   transition: right 0.3s ease-in-out;
+   z-index: 1001;
+   border-radius: 10px 0 0 10px;
+
+   display: flex; /* позволяет вложенному контейнеру растянуться */
+   flex-direction: column;
+}
+
+.side-panel__wrap.visible {
+   right: 0; /* появляется справа */
+}
+
+.overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.5); /* затемнение */
+   z-index: 1000;
+   opacity: 0; /* изначально прозрачный */
+   transition: opacity 0.3s ease-in-out;
+   pointer-events: none; /* клики не проходят */
+}
+
+.overlay.visible {
+   opacity: 1; /* плавное появление */
+   pointer-events: auto; /* активен для кликов */
+}
+
+.side-panel__close-button {
+   width: 100%;
+   padding: 10px;
+   margin: 0 0 20px;
+   background-color: #6e41e2;
+   border-radius: 10px 0 10px 10px;
+   font-size: 1.25rem;
+   color: white;
+}
+
+.side-panel__container {
+   overflow-y: auto;
+   text-align: center;
+   padding: 20px;
+}
+
+.side-panel__container::-webkit-scrollbar {
+   display: none; /* скрывает полосу прокрутки */
+}
+
+.side-panel__container > h3 {
+   margin: 20px 0;
+}
+
+.side-panel__wrap-small {
+   max-width: 550px;
+}
+
+.side-panel__small-img {
+   width: 100%;
+   object-fit: cover;
+}
+
+.side-panel__custom-button-enter {
+   margin-top: 30px;
+   padding: 10px;
+   border-radius: 5px;
+   color: white;
+   background-color: #6e41e2;
+}
+
+.side-panel__custom-button-registration {
+   margin-bottom: 30px;
+   padding: 10px;
+   border-radius: 5px;
+   color: #6e41e2;
+   border: 1px solid #6e41e2;
+   background-color: aliceblue;
+}

@@ -1,0 +1,37 @@
+.settings-panel__section {
+   position: fixed;
+   top: 0;
+   right: -350px;
+   width: 350px;
+   height: calc(100vh - 0px);
+   background-color: rgb(238, 100, 100);
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   transition: right 0.3s ease-in-out;
+   z-index: 1002;
+   border-radius: 10px 0 0 10px;
+   display: flex;
+   flex-direction: column;
+}
+
+.settings-panel__wrap {
+   padding: 20px;
+   overflow-y: auto;
+}
+
+.settings-panel__custom-button-close {
+   width: 100%;
+   padding: 10px;
+   margin: 0 0 20px;
+   background-color: #6e41e2;
+   border-radius: 10px 0 10px 10px;
+   font-size: 1.25rem;
+   color: white;
+}
+
+.settings-panel__wrap::-webkit-scrollbar {
+   display: none; /* скрывает полосу прокрутки */
+}
+
+.settings-panel__section.visible {
+   right: 0;
+}

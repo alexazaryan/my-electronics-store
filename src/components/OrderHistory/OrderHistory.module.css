@@ -1,0 +1,77 @@
+.order-history__section {
+   position: fixed;
+   top: 0;
+   right: -350px;
+   width: 350px;
+   height: calc(100vh - 0px);
+   background-color: rgb(183, 233, 251);
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   transition: right 0.3s ease-in-out;
+   z-index: 1002;
+   border-radius: 10px 0 0 10px;
+}
+
+.order-history__section.visible {
+   right: 0;
+}
+
+.order-history__custom-button-close {
+   width: 100%;
+   padding: 10px;
+   margin: 0 0 20px;
+   background-color: #6e41e2;
+   border-radius: 10px 0 10px 10px;
+   font-size: 1.25rem;
+   color: white;
+}
+
+.order-history__wrap {
+   overflow-y: auto;
+   height: calc(100vh - 80px);
+   padding: 20px;
+}
+
+.order-history__wrap::-webkit-scrollbar {
+   display: none; /* скрывает полосу прокрутки */
+}
+
+/* анимация  */
+.order-history__animation-blok {
+   position: relative;
+}
+
+/* smile */
+.order-history__wrap-loading-smile-img {
+   max-width: 550px;
+}
+
+.order-history__loading-smile-img {
+   width: 100%;
+}
+
+/* часы */
+.order-history__wrap-hourglass-img {
+   position: absolute;
+   z-index: 1;
+   width: 30px;
+   top: 90px;
+   left: 30px;
+
+   animation: rotateWithPause 1.5s linear infinite;
+}
+
+.order-history__hourglass-img {
+   width: 100%;
+}
+
+@keyframes rotateWithPause {
+   0% {
+      transform: rotate(0deg);
+   }
+   10% {
+      transform: rotate(180deg); /* быстрое вращение */
+   }
+   100% {
+      transform: rotate(180deg); /* пауза до конца цикла */
+   }
+}
