@@ -151,26 +151,21 @@ const AuthForm = () => {
          }
       }
    };
-   //
-   //
-   //
+
    useEffect(() => {
       if (user) {
          dispatch(fetchFavorites()); // загружаем избранные для этого user
       }
    }, [user, dispatch]);
-   //
-   //
-   //
-   // favorites
-   // Если пользователь авторизован, показываем его email и роль
+
    if (user) {
       return (
          <div className={styles["auth-form-container"]}>
             <div className="auth-form-container__wrap-welcome-emoji-img">
                <img
                   className={styles["auth-form-container__welcome-emoji-img"]}
-                  src="/welcome-emoji.png"
+                  // src="/welcome-emoji.png"
+                  src={`${import.meta.env.BASE_URL}welcome-emoji.png`}
                   alt="веселый смайлик"
                />
             </div>
@@ -202,7 +197,8 @@ const AuthForm = () => {
          <form onSubmit={handleSubmit} className={styles["auth-form"]}>
             <div className={styles["auth-form-container__wrap-emoji-pointer"]}>
                <img
-                  src="/emoji-pointer.png"
+                  // src="/emoji-pointer.png"
+                  src={`${import.meta.env.BASE_URL}emoji-pointer.png`}
                   alt="смайлик регистрации или входа"
                   className={styles["auth-form-container__emoji-pointer"]}
                />

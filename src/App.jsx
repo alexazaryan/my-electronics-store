@@ -7,7 +7,8 @@ import AuthLoader from "./components/AuthLoader/AuthLoader";
 const App = () => {
    return (
       <Provider store={store}>
-         <Router>
+         <Router basename="/my-electronics-store/">
+            {/* Указан базовый путь */}
             <AuthLoader>
                <AppRoutes />
             </AuthLoader>

@@ -35,7 +35,9 @@ const OrderHistory = forwardRef(({ isVisible }, ref) => {
                   >
                      <img
                         className={styles["order-history__loading-smile-img"]}
-                        src="/loading-smile.png"
+                        // src="/loading-smile.png"
+                        img
+                        src={`${import.meta.env.BASE_URL}loading-smile.png`}
                         alt="смайлик с часами"
                      />
                   </div>
@@ -44,7 +46,9 @@ const OrderHistory = forwardRef(({ isVisible }, ref) => {
                   <div className={styles["order-history__wrap-hourglass-img"]}>
                      <img
                         className={styles["order-history__hourglass-img"]}
-                        src="/hourglass.png"
+                        // src="/hourglass.png"
+
+                        src={`${import.meta.env.BASE_URL}hourglass.png`}
                         alt="песочные часы"
                      />
                   </div>
