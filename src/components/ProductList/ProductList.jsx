@@ -88,9 +88,9 @@ const ProductList = () => {
          ) : (
             <ul className={styles["product-list__ul"]}>
                {filteredProducts.slice(0, visibleCount).map((product) => {
-                  // const isFavorite = favorites.includes(product.id);
-                  const isFavorite = favorites.some(fav => fav.productId === product.id);
-
+                  const isFavorite = favorites.some(
+                     (fav) => fav.productId === product.id
+                  );
 
                   const name = product.name;
                   const capitalized =
@@ -180,6 +180,10 @@ const ProductList = () => {
                            )}
                            <CustomButton
                               className={styles["product-ist__custom-button"]}
+                              onClick={(e) => {
+                                 e.stopPropagation(); // остановить всплытие события
+                                 console.log("Купить"); // выводим сообщение в консоль
+                              }}
                            >
                               Купить
                            </CustomButton>

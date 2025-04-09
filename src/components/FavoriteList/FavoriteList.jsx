@@ -1,30 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
    fetchFavorites,
    toggleFavorite,
    updateFavoriteQuantity,
-} from "../../store/favoriteSlice"; // Загружаем избранное и обновляем количество
+} from "../../store/favoriteSlice";
 import CustomButton from "../CustomButton/CustomButton";
 import { toggleFavorites } from "../../store/menuSlice";
-import { BsTrash, BsPlusLg, BsDashLg } from "react-icons/bs";
-
+import { BsTrash, BsPlus, BsDash } from "react-icons/bs";
 import styles from "./FavoriteList.module.css";
 
 const FavoriteList = forwardRef(({ isVisible }, ref) => {
    const dispatch = useDispatch();
+   const navigate = useNavigate();
    const user = useSelector((state) => state.auth.user);
    const products = useSelector((state) => state.products.items);
-   const favoriteItems = useSelector((state) => state.favorite.items); // Массив объектов { productId, quantity }
-
+   const favoriteItems = useSelector((state) => state.favorite.items);
 
    useEffect(() => {
       if (user) {
-         dispatch(fetchFavorites()); // Загружаем избранное
+         dispatch(fetchFavorites());
       }
    }, [user, dispatch]);
 
-   // Используем useMemo для фильтрации товаров
    const favoriteProducts = useMemo(() => {
       return favoriteItems
          .map((fav) => {
@@ -34,15 +33,23 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
          .filter(Boolean);
    }, [products, favoriteItems]);
 
-   // Функция для обновления количества товара в избранном
-   const handleQuantityChange = (productId, change) => {
+   const handleQuantityChange = (productId, change, e) => {
+      e.stopPropagation();
       const product = favoriteProducts.find((item) => item.id === productId);
       if (!product) return;
 
       const newQuantity = (product.quantity || 1) + change;
+      if (newQuantity <= 0) return;
+      dispatch(updateFavoriteQuantity({ productId, quantity: newQuantity }));
+   };
 
-      if (newQuantity <= 0) return; // Нельзя сделать количество меньше 1
-      dispatch(updateFavoriteQuantity({ productId, quantity: newQuantity })); // обновляем количество
+   const handleDelete = (productId, e) => {
+      e.stopPropagation();
+      dispatch(toggleFavorite(productId));
+   };
+
+   const handleProductClick = (productId) => {
+      navigate(`/product/${productId}`);
    };
 
    const total = favoriteProducts.reduce(
@@ -57,7 +64,6 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
             isVisible ? styles["visible"] : ""
          }`}
       >
-         {/* закрыть панель */}
          <CustomButton
             className={styles["favorite-list__custom-button-close"]}
             onClick={() => dispatch(toggleFavorites(false))}
@@ -75,6 +81,7 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
                      <li
                         key={product.id}
                         className={styles["favorite-item__cards"]}
+                        onClick={() => handleProductClick(product.id)}
                      >
                         <div className={styles["favorite-item__card"]}>
                            <img
@@ -98,26 +105,26 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
 
                         <div className={styles["favorite__quantity-controls"]}>
                            <div className={styles["favorite__quantity-box"]}>
-                              <BsDashLg
+                              <BsDash
                                  className={styles["favorite__icon"]}
-                                 onClick={() =>
-                                    handleQuantityChange(product.id, -1)
+                                 onClick={(e) =>
+                                    handleQuantityChange(product.id, -1, e)
                                  }
                               />
-                              <span>{product.quantity || 1}</span>
-                              <BsPlusLg
+                              <div className={styles["favorite__things"]}>
+                                 {product.quantity || 1}
+                              </div>
+                              <BsPlus
                                  className={styles["favorite__icon"]}
-                                 onClick={() =>
-                                    handleQuantityChange(product.id, 1)
+                                 onClick={(e) =>
+                                    handleQuantityChange(product.id, 1, e)
                                  }
                               />
                            </div>
 
                            <BsTrash
                               className={styles["favorite__delete"]}
-                              onClick={() =>
-                                 dispatch(toggleFavorite(product.id))
-                              }
+                              onClick={(e) => handleDelete(product.id, e)}
                            />
                         </div>
                      </li>
@@ -125,7 +132,7 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
                </ul>
             )}
             <div className={styles["favorite-list__total"]}>
-               <strong>Total:</strong>
+               <strong>К оплате без доставки:</strong>
                <strong>{total.toLocaleString("uk-UA")} ₴</strong>
             </div>
          </div>

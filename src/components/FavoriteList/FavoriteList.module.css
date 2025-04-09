@@ -68,8 +68,8 @@
 }
 
 .favorite__delete {
-   width: 25px;
-   height: 25px;
+   width: 20px;
+   height: 20px;
    color: red;
    cursor: pointer;
    transition: 0.2s;
@@ -80,14 +80,22 @@
 }
 
 .favorite__icon {
-   width: 25px;
-   height: 25px;
+   width: 20px;
+   height: 20px;
    cursor: pointer;
    transition: 0.2s;
+   border-radius: 5px;
+
+   border: 1px solid #6e41e2;
 }
 
 .favorite__icon:hover {
    transform: scale(1.1);
+}
+
+.favorite__things {
+   color: #6e41e2;
+   font-size: 1.2rem;
 }
 
 /* низ - цена */
@@ -102,4 +110,10 @@
    background-color: #ffebf0;
    position: absolute;
    border-radius: 0 0 0 20px;
+}
+
+.favorite-item__cards:hover {
+   cursor: pointer;
+   background-color: #f5f5f5;
+   transition: background-color 0.2s ease;
 }

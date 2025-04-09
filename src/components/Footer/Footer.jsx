@@ -1,3 +1,7 @@
+import { PiTelegramLogoDuotone } from "react-icons/pi";
+import { BsInstagram } from "react-icons/bs"; 
+import { BsWhatsapp } from "react-icons/bs";
+
 import styles from "./Footer.module.css";
 
 const Footer = () => {
@@ -24,14 +28,28 @@ const Footer = () => {
                <div className={styles["footer-section"]}>
                   <h3 className={styles["footer-title"]}>Социальные сети</h3>
                   <div className={styles["footer-icons"]}>
-                     <a href="#" className={styles["footer-icon"]}>
-                        ( FB - сылка)
+                     <a
+                        href="https://t.me/your_telegram_link"
+                        target="_blank"
+                        className={styles["footer-icon"]}
+                     >
+                        <PiTelegramLogoDuotone
+                           className={styles["telegram-icon"]}
+                        />
                      </a>
-                     <a href="#" className={styles["footer-icon"]}>
-                        ( IG - сылка)
+                     <a
+                        href="https://www.instagram.com/your_instagram_link"
+                        target="_blank"
+                        className={styles["footer-icon"]}
+                     >
+                        <BsInstagram className={styles["instagram-icon"]} />
                      </a>
-                     <a href="#" className={styles["footer-icon"]}>
-                        ( TW - сылка)
+                     <a
+                        href="https://wa.me/your_viber_link"
+                        target="_blank"
+                        className={styles["footer-icon"]}
+                     >
+                        <BsWhatsapp className={styles["whatsapp-icon"]} />
                      </a>
                   </div>
                </div>

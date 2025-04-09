@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery } from "../../store/searchSlice";
 import { toggleFavorites, toggleMenu } from "../../store/menuSlice";
 import { togglePanel } from "../../store/sidePanelSlice";
+import HeaderNavigationBlock from "./HeaderNavigationBlock";
 
 import styles from "./Header.module.css";
 
@@ -109,7 +110,11 @@ const Header = () => {
                />
             </div>
 
-            <div className={styles["header__right"]}>
+            <div className={styles["hideOnMobile"]}>
+               <HeaderNavigationBlock />
+            </div>
+
+            {/* <div className={styles["header__right"]}>
                <div
                   className={`${styles["icon"]} ${styles["icon-account"]}`}
                   onClick={() => dispatch(toggleMenu())}
@@ -154,7 +159,7 @@ const Header = () => {
                   <BsCartDash size={24} />
                   <span>Корзина</span>
                </div>
-            </div>
+            </div> */}
          </div>
       </div>
    );

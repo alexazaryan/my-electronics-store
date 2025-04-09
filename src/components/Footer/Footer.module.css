@@ -40,14 +40,16 @@
 
 .footer-icons {
    display: flex;
+   justify-content: center;
    gap: 10px;
 }
 
 .footer-icon {
    display: inline-block;
    text-decoration: none;
-   color: #f8c400;
-   font-size: 18px;
+   color: white;
+   font-size: 1.6rem;
+   margin: 5px 10px;
    transition: color 0.3s ease;
 }
 
