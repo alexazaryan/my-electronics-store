@@ -1,0 +1,6 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+    <!-- Фон с закругленными углами -->
+    <rect width="128" height="128" rx="10" fill="#6e41e2"/>
+    <!-- Буква "S" -->
+    <text x="50%" y="50%" font-size="80" font-family="Arial" fill="white" text-anchor="middle" dy=".3em" font-weight="bold">S</text>
+</svg>
