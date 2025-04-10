@@ -35,8 +35,6 @@ const OrderHistory = forwardRef(({ isVisible }, ref) => {
                   >
                      <img
                         className={styles["order-history__loading-smile-img"]}
-                        // src="/loading-smile.png"
-                        img
                         src={`${import.meta.env.BASE_URL}loading-smile.png`}
                         alt="смайлик с часами"
                      />

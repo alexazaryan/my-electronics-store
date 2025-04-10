@@ -1,27 +1,29 @@
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 
 const useBodyOverflow = (isVisible) => {
-   useLayoutEffect(() => {
+   useEffect(() => {
       const scrollbarWidth =
          window.innerWidth - document.documentElement.clientWidth;
 
       if (isVisible) {
-         document.body.style.overflow = "hidden"; // Блокируем прокрутку
-         document.body.style.paddingRight = `${scrollbarWidth}px`; // Добавляем padding-right
-         document.documentElement.style.setProperty(
-            "--scrollbar-width",
-            `${scrollbarWidth}px`
-         ); // Устанавливаем CSS-переменную
+         requestAnimationFrame(() => {
+            document.body.style.overflow = "hidden";
+            document.body.style.paddingRight = `${scrollbarWidth}px`;
+            document.documentElement.style.setProperty(
+               "--scrollbar-width",
+               `${scrollbarWidth}px`
+            );
+         });
       } else {
-         document.body.style.overflow = "auto"; // Восстанавливаем прокрутку
-         document.body.style.paddingRight = "0"; // Убираем padding-right
-         document.documentElement.style.setProperty("--scrollbar-width", "0"); // Сбрасываем CSS-переменную
+         document.body.style.overflow = "auto";
+         document.body.style.paddingRight = "0";
+         document.documentElement.style.setProperty("--scrollbar-width", "0");
       }
 
       return () => {
-         document.body.style.overflow = "auto"; // Очистка при размонтировании
-         document.body.style.paddingRight = "0"; // Убираем padding-right
-         document.documentElement.style.setProperty("--scrollbar-width", "0"); // Сбрасываем CSS-переменную
+         document.body.style.overflow = "auto";
+         document.body.style.paddingRight = "0";
+         document.documentElement.style.setProperty("--scrollbar-width", "0");
       };
    }, [isVisible]);
 };

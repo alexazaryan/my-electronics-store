@@ -1,17 +1,37 @@
-// HeaderNavigationBlock.jsx
 import { BsCartDash } from "react-icons/bs";
 import { FaRegHeart, FaRegUser } from "react-icons/fa";
-import { BiSolidHeart } from "react-icons/bi";
+import { BiSolidHeart, BiCategory } from "react-icons/bi";
+
 import { useDispatch, useSelector } from "react-redux";
-import { toggleFavorites, toggleMenu } from "../../store/menuSlice";
+import {
+   toggleCategoryList,
+   toggleFavorites,
+   toggleMenu,
+} from "../../store/menuSlice";
 import { togglePanel } from "../../store/sidePanelSlice";
 
 import styles from "./Header.module.css"; // общий CSS остаётся
+import useBodyOverflow from "../../hooks/useBodyOverflow";
 
 const HeaderNavigationBlock = () => {
    const dispatch = useDispatch();
+
+   const isFavoritesVisible = useSelector(
+      (state) => state.menu.isFavoritesVisible // Используем isFavoritesVisible из меню
+   );
+   const isCategoryListVisible = useSelector(
+      (state) => state.menu.isCategoryListVisible
+   );
+
+   const isOverlayVisible = useSelector(
+      (state) => state.sidePanel.isOverlayVisible
+   );
    const favoriteCount = useSelector((state) => state.favorite.items.length);
    const isRegistered = useSelector((state) => state.auth.user);
+
+   useBodyOverflow(
+      isFavoritesVisible || isCategoryListVisible || isOverlayVisible
+   );
 
    return (
       <div className={styles["header__right"]}>
@@ -29,7 +49,7 @@ const HeaderNavigationBlock = () => {
             className={`${styles["icon"]} ${styles["icon-favorites"]}`}
             onClick={() => {
                if (!isRegistered) {
-                  dispatch(togglePanel()); // если не вошёл — открыть панель
+                  dispatch(togglePanel());
                } else {
                   dispatch(toggleFavorites()); // если вошёл — избранное
                }
@@ -54,10 +74,30 @@ const HeaderNavigationBlock = () => {
          </div>
 
          {/* Кнопка "Корзина" */}
-         <div className={`${styles["icon"]} ${styles["icon-cart"]}`}>
+         {/* <div
+            className={`${styles["icon"]} ${styles["icon-cart"]}`}
+         >
             <BsCartDash size={24} />
             <span>Корзина</span>
+         </div> */}
+
+         {/* категории */}
+         <div
+            className={`${styles["icon"]} ${styles["icon-cart"]}`}
+            onClick={() => dispatch(toggleCategoryList())}
+         >
+            <BiCategory size={24} />
+            <span>Категории</span>
          </div>
+
+         {/* Затемняющий слой */}
+         <div
+            className={`${styles.overlay} ${
+               isCategoryListVisible || isFavoritesVisible || isOverlayVisible
+                  ? styles.visible
+                  : ""
+            }`}
+         ></div>
       </div>
    );
 };

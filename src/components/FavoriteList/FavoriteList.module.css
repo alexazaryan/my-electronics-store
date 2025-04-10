@@ -3,12 +3,16 @@
    top: 0;
    right: -350px;
    width: 350px;
-   height: 100vh;
    background-color: #ffebf0;
    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
    transition: right 0.3s ease-in-out;
    z-index: 1002;
    border-radius: 10px 0 0 10px;
+
+   /* height: 100vh; */
+   height: 100dvh; /* учитываем изменение размера экрана с появлением браузерного меню */
+   display: flex; /* делаем вертикальный флекс */
+   flex-direction: column; /* чтобы wrap и total шли друг за другом */
 }
 
 .favorite-list.visible {
@@ -26,9 +30,14 @@
 }
 
 .favorite-list__wrap {
+   flex: 1; /* занимает всё доступное место */
    overflow-y: auto;
-   height: calc(100vh - 80px);
    padding: 20px;
+
+   /* height: calc(100vh - 80px); */
+   height: calc(
+      100dvh - 80px
+   ); /* высота контента, с учётом места для кнопки/хедера */
 }
 
 .favorite-list__wrap::-webkit-scrollbar {

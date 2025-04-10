@@ -35,7 +35,8 @@ const SidePanel = () => {
                <div className={styles["side-panel__wrap-small"]}>
                   <img
                      className={styles["side-panel__small-img"]}
-                     src="/happySmile.png"
+                     // src="/happySmile.png"
+                     src={`${import.meta.env.BASE_URL}happySmile.png`}
                      alt="смайлик"
                   />
                </div>

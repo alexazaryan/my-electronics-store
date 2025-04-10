@@ -27,7 +27,6 @@
 }
 
 /* навигация  */
-
 .stickyBottomMobile {
    display: flex;
    justify-content: center; /* Центрируем контент */
@@ -39,7 +38,7 @@
    height: 60px; /* Высота панели (по желанию) */
    background-color: #fff; /* Фон, чтобы отделить от контента */
    border-top: 1px solid #ccc;
-   z-index: 1000; /* Поверх всего */
+   z-index: 100; /* Поверх всего */
 }
 
 @media (min-width: 768px) {

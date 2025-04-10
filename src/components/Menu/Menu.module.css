@@ -8,12 +8,11 @@
    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
    transition: right 0.3s ease-in-out;
    z-index: 1001;
-   /* padding: 20px; */
    border-radius: 10px 0 0 10px;
    overflow-y: auto; /* Разрешаем прокрутку внутри меню */
    scrollbar-width: none; /* Скрываем полосу прокрутки в Firefox */
 }
-
+/* visible */
 .menu__collection {
    padding: 20px;
 }
