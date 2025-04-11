@@ -42,7 +42,7 @@
 }
 
 .icon {
-   margin-left: 15px;
+   /* margin-left: 15px; */
    cursor: pointer;
 }
 
@@ -156,6 +156,16 @@
 /*  навигация */
 .hideOnMobile {
    display: none;
+}
+
+.home-mobile-only {
+   display: none; /* по умолчанию скрыт */
+}
+
+@media (max-width: 768px) {
+   .home-mobile-only {
+      display: block; /* показывается только на мобилке */
+   }
 }
 
 @media (min-width: 768px) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, deleteProduct } from "../../store/productsSlice";
 import { toggleFavorite } from "../../store/favoriteSlice";
@@ -19,7 +19,7 @@ const ProductList = () => {
    const searchQuery = useSelector((state) => state.search.query);
    const favorites = useSelector((state) => state.favorite.items);
    const { isAdmin } = useSelector((state) => state.auth);
-   const isRegistered = useSelector((state) => !!state.auth.user); // зарегестрированный или нет
+   const isRegistered = useSelector((state) => !!state.auth.user);
    const dispatch = useDispatch();
    const navigate = useNavigate();
 
@@ -36,7 +36,6 @@ const ProductList = () => {
       dispatch(fetchProducts());
    }, [dispatch]);
 
-   // Правильная логика фильтрации
    let filteredProducts = [];
 
    if (searchQuery.trim()) {
@@ -51,6 +50,14 @@ const ProductList = () => {
                  (product) => product.category === selectedCategory
               );
    }
+
+   // 👇 сохраняем скидки один раз на сессию
+   const discountMapRef = useRef({});
+   products.forEach((p) => {
+      if (!(p.id in discountMapRef.current)) {
+         discountMapRef.current[p.id] = Math.random() < 0.4;
+      }
+   });
 
    const handleDelete = async (productId, imageUrl) => {
       try {
@@ -96,6 +103,9 @@ const ProductList = () => {
                   const capitalized =
                      name.charAt(0).toUpperCase() + name.slice(1);
 
+                  const hasDiscount = discountMapRef.current[product.id];
+                  const fakeOldPrice = Math.floor(product.price * 1.3);
+
                   return (
                      <li
                         key={product.id}
@@ -115,12 +125,12 @@ const ProductList = () => {
                            <div
                               className={styles["product-list__favorite-icon"]}
                               onClick={(e) => {
-                                 e.preventDefault(); // остановить переход по ссылке
-                                 e.stopPropagation(); // 🛑 остановить всплытие
+                                 e.preventDefault();
+                                 e.stopPropagation();
                                  if (!isRegistered) {
-                                    dispatch(togglePanel()); // открыть сайдпанель для логина
+                                    dispatch(togglePanel());
                                  } else {
-                                    dispatch(toggleFavorite(product.id)); // добавить/удалить в избранное
+                                    dispatch(toggleFavorite(product.id));
                                  }
                               }}
                            >
@@ -143,21 +153,43 @@ const ProductList = () => {
                               <li className={styles["product-list__name"]}>
                                  {capitalized}
                               </li>
+
                               <li
                                  className={styles["product-list__description"]}
                               >
-                                 {/* описание если надо */}
+                                 {/* {product.description || "Описание отсутствует"} */}
                               </li>
-                              <li>
-                                 <strong>
-                                    Цена &nbsp;
-                                    {product.price?.toLocaleString("uk-UA")}
-                                    &nbsp;₴
-                                 </strong>
+
+                              {/* скидки */}
+                              <li
+                                 className={
+                                    hasDiscount
+                                       ? styles["old-price"]
+                                       : styles["invisible"]
+                                 }
+                              >
+                                 {fakeOldPrice.toLocaleString("uk-UA")} ₴
                               </li>
-                              <li style={{ color: "red" }}>
-                                 Дроп &nbsp;
-                                 {product.purchase?.toLocaleString("uk-UA")}
+
+                              <li
+                                 className={
+                                    hasDiscount
+                                       ? styles["discount-price"]
+                                       : styles["normal-price"]
+                                 }
+                              >
+                                 {product.price.toLocaleString("uk-UA")} ₴
+                              </li>
+
+                              <li
+                                 style={{ color: "red" }}
+                                 className={
+                                    !isAdmin ? styles["hidden-for-user"] : ""
+                                 }
+                              >
+                                 Дроп&nbsp;
+                                 {product.purchase?.toLocaleString("uk-UA") ||
+                                    "—"}
                                  &nbsp;₴
                               </li>
                            </ul>
@@ -178,15 +210,15 @@ const ProductList = () => {
                                  delete
                               </button>
                            )}
-                           <CustomButton
+                           {/* <CustomButton
                               className={styles["product-ist__custom-button"]}
                               onClick={(e) => {
-                                 e.stopPropagation(); // остановить всплытие события
-                                 console.log("Купить"); // выводим сообщение в консоль
+                                 e.stopPropagation();
+                                 console.log("Купить");
                               }}
                            >
                               Купить
-                           </CustomButton>
+                           </CustomButton> */}
                         </div>
                      </li>
                   );

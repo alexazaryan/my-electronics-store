@@ -4,6 +4,8 @@ import { onAuthStateChangedListener } from "../../utils/firebase";
 import { setUser, clearUser } from "../../store/authSlice";
 import { db } from "../../utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { fetchFavorites } from "../../store/favoriteSlice";
+import { fetchProducts } from "../../store/productsSlice";
 
 const AuthLoader = ({ children }) => {
    const dispatch = useDispatch();
@@ -22,6 +24,9 @@ const AuthLoader = ({ children }) => {
                      role: userData.role || "user", // fallback на user
                   })
                );
+
+               dispatch(fetchFavorites(user.uid)); // ✅ загружаем избранное
+               dispatch(fetchProducts()); // ✅ загружаем товары
             } catch (error) {
                console.error("Ошибка при получении роли из Firestore:", error);
             }

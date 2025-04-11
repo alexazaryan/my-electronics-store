@@ -81,14 +81,18 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
                      <li
                         key={product.id}
                         className={styles["favorite-item__cards"]}
-                        onClick={() => handleProductClick(product.id)}
                      >
                         <div className={styles["favorite-item__card"]}>
                            <img
+                              className={styles["favorite-item__img"]}
                               src={
                                  product.imageUrl?.split(",")[0] || "/logo.png"
                               }
                               alt={product.name}
+                              onClick={() => {
+                                 handleProductClick(product.id);
+                                 dispatch(toggleFavorites(false));
+                              }}
                               width={50}
                            />
                            <div>
@@ -103,6 +107,7 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
                            </div>
                         </div>
 
+                        {/* +/- */}
                         <div className={styles["favorite__quantity-controls"]}>
                            <div className={styles["favorite__quantity-box"]}>
                               <BsDash
@@ -131,6 +136,8 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
                   ))}
                </ul>
             )}
+
+            {/* оплата */}
             <div className={styles["favorite-list__total"]}>
                <strong>К оплате без доставки:</strong>
                <strong>{total.toLocaleString("uk-UA")} ₴</strong>
@@ -141,3 +148,4 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
 });
 
 export default FavoriteList;
+// мой

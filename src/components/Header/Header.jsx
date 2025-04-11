@@ -4,14 +4,18 @@ import { Link } from "react-router-dom";
 import { setSelectedCategory } from "../../store/categoriesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery } from "../../store/searchSlice";
+
+
 import styles from "./Header.module.css";
 
 //dispatch
 const Header = () => {
+   const dispatch = useDispatch();
+
+
    // Используем forwardRef
    const [isOverlayVisible, setOverlayVisible] = useState(false);
 
-   const dispatch = useDispatch();
    const searchQuery = useSelector((state) => state.search.query);
 
    const handleSearchButtonClick = () => {
@@ -25,7 +29,7 @@ const Header = () => {
    const handleOverlayClick = () => {
       setOverlayVisible(false); // Скрываем затемнение при клике на фон
    };
-   // darkOverlay
+
    return (
       <div className={styles["header"]}>
          {/* Привязываем ref */}
@@ -36,6 +40,7 @@ const Header = () => {
                   onClick={() => {
                      dispatch(setSelectedCategory("Все товары")); // сброс категории
                      dispatch(setSearchQuery("")); // (опционально) сброс поиска
+
                   }}
                >
                   {/* Ссылка на главную страницу Logo*/}

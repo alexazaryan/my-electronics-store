@@ -82,6 +82,16 @@
    background-color: #4f29b1;
 }
 
+.hidden-for-user {
+   visibility: hidden; /* скрыть контент, но оставить место */
+}
+
+.old-price {
+   text-decoration: line-through;
+   color: gray;
+   font-size: 14px;
+}
+
 .product-list__favorite-icon {
    position: absolute;
    display: flex;
@@ -140,4 +150,28 @@
       flex: 0 1 calc((100% - 0.5rem) / 2);
       min-width: auto;
    }
+}
+
+/* =============================== */
+.old-price {
+   text-decoration: line-through;
+   color: gray;
+   font-size: 14px;
+}
+
+.discount-price {
+   color: red;
+   font-weight: bold;
+   font-size: 16px;
+}
+
+.normal-price {
+   color: #222;
+   font-weight: bold;
+   font-size: 16px;
+}
+
+.invisible {
+   visibility: hidden;
+   height: 1em;
 }
