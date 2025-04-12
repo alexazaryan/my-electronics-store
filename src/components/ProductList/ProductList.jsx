@@ -115,11 +115,11 @@ const ProductList = () => {
                         <div className={styles["product-list__img-wrap"]}>
                            <img
                               src={
-                                 product.imageUrl
-                                    ? product.imageUrl.split(",")[0]
-                                    : "/logo.png"
+                                 product.images?.[0] ||
+                                 product.imageUrl?.split(",")[0] ||
+                                 "/logo.png"
                               }
-                              alt="логотип"
+                              alt={product.name}
                               className={styles["product-list__img"]}
                            />
                            <div
@@ -226,14 +226,16 @@ const ProductList = () => {
             </ul>
          )}
 
-         {selectedCategory === "Все товары" && !searchQuery.trim() && (
-            <CustomButton
-               onClick={handleLoadMore}
-               className={styles["product-ist__custom-button--add-product"]}
-            >
-               Показать еще
-            </CustomButton>
-         )}
+         {status === "succeeded" &&
+            selectedCategory === "Все товары" &&
+            !searchQuery.trim() && (
+               <CustomButton
+                  onClick={handleLoadMore}
+                  className={styles["product-ist__custom-button--add-product"]}
+               >
+                  Показать еще
+               </CustomButton>
+            )}
       </div>
    );
 };

@@ -8,14 +8,12 @@
 }
 
 .header {
-   position: fixed;
+   position: relative;
    top: 0;
    left: 0;
    right: 0;
    display: flex;
    justify-content: space-between;
-   /* darkOverlay  */
-   /* padding-right: var(--scrollbar-width, 20px) !important; */
    padding-right: var(
       --scrollbar-width,
       0

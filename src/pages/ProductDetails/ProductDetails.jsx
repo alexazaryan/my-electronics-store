@@ -60,7 +60,10 @@ const ProductDetails = () => {
 
             if (productSnap.exists()) {
                const data = productSnap.data();
-               const imageArray = data.imageUrl.split(",").slice(0, 15);
+
+               const imageArray = Array.isArray(data.images)
+                  ? data.images.slice(0, 15)
+                  : (data.imageUrl?.split(",") || []).slice(0, 15);
                setProduct(data);
                setImages(imageArray);
                setImageIndex(0);
@@ -119,7 +122,6 @@ const ProductDetails = () => {
                         }
                      }}
                   >
-                     {/* product   */}
                      {isFavorite ? (
                         <BiSolidHeart
                            style={{
@@ -145,10 +147,11 @@ const ProductDetails = () => {
                         style={{
                            transform: `translateX(-${imageIndex * 100}%)`,
                            transition: transition
-                              ? "transform 0.5s ease-in-out"
+                              ? "transform 0.2s ease-in-out"
                               : "none",
                         }}
                      >
+                        {/* фото */}
                         {images.map((img, index) => (
                            <div key={index} className={styles["slide"]}>
                               <img

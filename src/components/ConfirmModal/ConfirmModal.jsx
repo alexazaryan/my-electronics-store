@@ -8,7 +8,11 @@ const ConfirmModal = ({ handleDelete, product, setIsModalOpen }) => {
             <div
                className={styles["confirm-modal__button"]}
                onClick={() => {
-                  handleDelete(product.id, product.imageUrl);
+                  handleDelete(
+                     product.id,
+                     product.images?.[0] || product.imageUrl
+                  );
+
                   setIsModalOpen(false);
                }}
             >

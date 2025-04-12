@@ -2,21 +2,21 @@ import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../store/productsSlice";
 import { uploadImageToImgBB } from "../../utils/uploadImage";
-import { MdAdd } from "react-icons/md";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CsvUpload from "../../components/CsvUpload/CsvUpload";
-
-import styles from "./ProductForm.module.css"; // Ваши стили
 import AdminNewsEditor from "../../components/AdminNewsEditor/AdminNewsEditor";
+import styles from "./ProductForm.module.css";
 
 const ProductForm = () => {
    const dispatch = useDispatch();
+   const fileInputRef = useRef(null);
+
    const [productData, setProductData] = useState({
-      category: "Все товары",
-      imageUrl: "",
+      category: "",
       name: "",
       description: "",
       price: "",
+      images: [],
    });
 
    const [success, setSuccess] = useState(false);
@@ -26,53 +26,51 @@ const ProductForm = () => {
       name: false,
       description: false,
       price: false,
-      imageUrl: false,
+      images: false,
    });
-
-   const fileInputRef = useRef(null);
 
    const handleInputChange = (e) => {
       const { name, value } = e.target;
-
-      setProductData({
-         ...productData,
-         [name]: value,
-      });
+      setProductData((prev) => ({ ...prev, [name]: value }));
    };
 
-   const handleImageUpload = async (e) => {
-      const file = e.target.files[0];
-      if (file) {
-         try {
-            const imageUrl = await uploadImageToImgBB(file);
-            setProductData({ ...productData, imageUrl });
-         } catch (error) {
-            setError("Ошибка загрузки изображения");
-         }
+   const handleMultiImageUpload = async (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length < 2 || files.length > 15) {
+         setError("Загрузите от 2 до 15 изображений.");
+         return;
+      }
+
+      try {
+         const urls = await Promise.all(files.map(uploadImageToImgBB));
+         setProductData((prev) => ({
+            ...prev,
+            images: urls,
+         }));
+         setError(null);
+      } catch (err) {
+         console.error(err);
+         setError("Ошибка при загрузке изображений");
       }
    };
 
    const handleSubmit = async (e) => {
       e.preventDefault();
 
-      // Проверка данных
-      let errors = {
+      const errors = {
          category: !productData.category,
          name: !productData.name,
          description: !productData.description,
          price: isNaN(productData.price) || productData.price <= 0,
-         imageUrl: !productData.imageUrl,
+         images: productData.images.length < 2,
       };
 
       setFormErrors(errors);
 
-      // Если есть ошибки, не отправляем форму
       if (Object.values(errors).includes(true)) {
          setError("Пожалуйста, заполните все поля корректно.");
          return;
       }
-
-      setError(null);
 
       try {
          await dispatch(
@@ -81,25 +79,22 @@ const ProductForm = () => {
                price: Number(productData.price),
             })
          );
+
          setSuccess(true);
          alert("Товар добавлен!");
 
-         // Очищаем форму
          setProductData({
+            category: "",
             name: "",
             description: "",
             price: "",
-            imageUrl: "",
-            category: "",
+            images: [],
          });
 
-         // Очищаем input для изображения
-         if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-         }
-      } catch (error) {
-         console.error("Ошибка при добавлении товара:", error);
-         setError("Ошибка при добавлении товара в базу.");
+         if (fileInputRef.current) fileInputRef.current.value = "";
+      } catch (err) {
+         console.error("Ошибка при добавлении товара:", err);
+         setError("Ошибка при добавлении товара.");
       }
    };
 
@@ -112,7 +107,7 @@ const ProductForm = () => {
                   <u>Загрузка индивидуального товара</u>
                </h4>
 
-               {/* Выбор категории товара */}
+               {/* Категория */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>Категория:</label>
                   <select
@@ -123,7 +118,7 @@ const ProductForm = () => {
                      value={productData.category}
                      onChange={handleInputChange}
                   >
-                     <option value="Все товары">Все товары</option>
+                     <option value="">Выберите категорию</option>
                      <option value="Машины">Машины</option>
                      <option value="Аксессуары">Аксессуары</option>
                      <option value="Смартфоны">Смартфоны</option>
@@ -131,7 +126,8 @@ const ProductForm = () => {
                      <option value="Носки">Носки</option>
                   </select>
                </div>
-               {/* Название товара */}
+
+               {/* Название */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>
                      Название товара:
@@ -147,11 +143,10 @@ const ProductForm = () => {
                      onChange={handleInputChange}
                   />
                </div>
-               {/* Описание товара */}
+
+               {/* Описание */}
                <div className={styles["form__field"]}>
-                  <label className={styles["form__label"]}>
-                     Описание товара:
-                  </label>
+                  <label className={styles["form__label"]}>Описание:</label>
                   <input
                      className={`${styles["form__input"]} ${
                         formErrors.description
@@ -165,7 +160,8 @@ const ProductForm = () => {
                      onChange={handleInputChange}
                   />
                </div>
-               {/* Цена товара */}
+
+               {/* Цена */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>Цена:</label>
                   <input
@@ -179,44 +175,54 @@ const ProductForm = () => {
                      onChange={handleInputChange}
                   />
                </div>
-               {/* Изображение товара */}
+
+               {/* Загрузка изображений */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>
-                     Изображение товара:
+                     Загрузите от 2 до 15 изображений:
                   </label>
                   <input
                      ref={fileInputRef}
                      className={`${styles["form__fileInput"]} ${
-                        formErrors.imageUrl
+                        formErrors.images
                            ? styles["form__fileInput--error"]
                            : ""
                      }`}
                      type="file"
                      accept="image/*"
-                     onChange={handleImageUpload}
+                     multiple
+                     onChange={handleMultiImageUpload}
                   />
-                  <div className={styles["form-wrap__add-img"]}>
-                     {productData.imageUrl ? (
-                        <img
-                           className={styles["form__image"]}
-                           src={productData.imageUrl}
-                           alt="Uploaded"
-                        />
-                     ) : (
-                        <MdAdd />
-                     )}
-                  </div>
                </div>
+
+               {/* Превью изображений */}
+               {productData.images.length > 0 && (
+                  <div className={styles["form__image-preview-wrap"]}>
+                     {productData.images.map((img, i) => (
+                        <div key={i} className={styles["form__image-item"]}>
+                           <img
+                              src={img}
+                              className={styles["form__image"]}
+                              alt={`preview-${i}`}
+                           />
+                        </div>
+                     ))}
+                  </div>
+               )}
+
+               {/* Ошибки / Успех */}
                {error && <p className={styles["form__error"]}>{error}</p>}
                {success && (
                   <p className={styles["form__success"]}>
                      Товар успешно добавлен!
                   </p>
                )}
+
                <CustomButton onClick={handleSubmit}>
                   Добавить товар
                </CustomButton>
             </form>
+
             <div className={styles["form__up-load"]}>
                <h4>
                   <u>Загрузка файлов типов .CSV</u>
@@ -226,11 +232,7 @@ const ProductForm = () => {
                </div>
             </div>
 
-            <div>
-               <div>
-                  <AdminNewsEditor />
-               </div>
-            </div>
+            <AdminNewsEditor />
          </div>
       </>
    );

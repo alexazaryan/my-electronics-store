@@ -1,0 +1,17 @@
+.banner {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-weight: bold;
+   width: 100%;
+   background-color: gold;
+}
+
+.banner__wrap-img {
+   margin: 0 10px;
+   width: 40px;
+}
+
+.banner__img-car {
+   width: 100%;
+}

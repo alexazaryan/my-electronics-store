@@ -25,7 +25,10 @@ const CsvUpload = () => {
                      price: Number(item["Рекомендовання розничная цена"]),
                      purchase: Number(item["Дроп цена для партнера"]),
                      stock: item["Наличие"] === "instock",
-                     imageUrl: item["Изображения"],
+                     images: item["Изображения"]
+                        ? item["Изображения"].split(",")
+                        : [],
+                     mainImage: item["Изображения"]?.split(",")[0] || "",
                      description: item["Описание товара"],
                      category: item["Категории товара"],
                      subcategory: item["Подкатегории"],

@@ -145,11 +145,13 @@
 }
 
 .product-list__favorite-icon {
+   /* border: 2px solid red; */
+
    position: absolute;
    display: flex;
    justify-content: center;
    align-items: center;
-   left: 70%;
+   left: 65%;
    top: 85%;
    width: 25px;
    height: 25px;

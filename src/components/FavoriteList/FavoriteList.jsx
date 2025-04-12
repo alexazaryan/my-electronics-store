@@ -24,6 +24,18 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
       }
    }, [user, dispatch]);
 
+   useEffect(() => {
+      if (!products.length || !favoriteItems.length) return;
+
+      const validIds = new Set(products.map((p) => p.id));
+
+      favoriteItems.forEach((fav) => {
+         if (!validIds.has(fav.productId)) {
+            dispatch(toggleFavorite(fav.productId));
+         }
+      });
+   }, [products, favoriteItems, dispatch]);
+
    const favoriteProducts = useMemo(() => {
       return favoriteItems
          .map((fav) => {
@@ -86,7 +98,9 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
                            <img
                               className={styles["favorite-item__img"]}
                               src={
-                                 product.imageUrl?.split(",")[0] || "/logo.png"
+                                 product.images?.[0] ||
+                                 product.imageUrl?.split(",")[0] ||
+                                 "/logo.png"
                               }
                               alt={product.name}
                               onClick={() => {
@@ -148,4 +162,3 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
 });
 
 export default FavoriteList;
-// мой
