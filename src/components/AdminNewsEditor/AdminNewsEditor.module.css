@@ -1,16 +1,21 @@
 .editor-container {
    max-width: 500px;
-   margin: auto;
+   width: 100%;
    padding: 20px;
    border: 1px solid #ccc;
    border-radius: 12px;
    background-color: antiquewhite;
+
+   margin: 20px 0;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .editor-title {
-   font-size: 1.5rem;
    font-weight: bold;
-   margin-bottom: 20px;
+}
+
+.editor-input {
+   margin-top: 20px;
 }
 
 .editor-input,
@@ -42,4 +47,12 @@
 
 .editor-button:hover {
    background-color: #1e40af;
+}
+
+/* =================== Адаптив =================== */
+
+@media (max-width: 768px) {
+   .editor-container {
+      max-width: 100%;
+   }
 }

@@ -13,8 +13,10 @@ import { togglePanel } from "../../store/sidePanelSlice";
 const ProductList = () => {
    const [selectedProduct, setSelectedProduct] = useState(null);
    const [isModalOpen, setIsModalOpen] = useState(false);
-   const [visibleCount, setVisibleCount] = useState(36);
-   const user = useSelector((state) => state.auth.user);
+
+   const initialVisibleCount =
+      Number(sessionStorage.getItem("visibleCount")) || 36;
+   const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
 
    const searchQuery = useSelector((state) => state.search.query);
    const favorites = useSelector((state) => state.favorite.items);
@@ -22,6 +24,7 @@ const ProductList = () => {
    const isRegistered = useSelector((state) => !!state.auth.user);
    const dispatch = useDispatch();
    const navigate = useNavigate();
+   const user = useSelector((state) => state.auth.user);
 
    const {
       items: products,
@@ -69,7 +72,11 @@ const ProductList = () => {
    };
 
    const handleLoadMore = () => {
-      setVisibleCount((prev) => prev + 36);
+      setVisibleCount((prev) => {
+         const newCount = prev + 36; // увеличиваем на 36
+         sessionStorage.setItem("visibleCount", newCount); // сохраняем в сессии
+         return newCount;
+      });
    };
 
    return (

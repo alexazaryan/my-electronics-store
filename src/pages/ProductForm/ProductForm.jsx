@@ -5,33 +5,41 @@ import { uploadImageToImgBB } from "../../utils/uploadImage";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CsvUpload from "../../components/CsvUpload/CsvUpload";
 import AdminNewsEditor from "../../components/AdminNewsEditor/AdminNewsEditor";
+
 import styles from "./ProductForm.module.css";
 
 const ProductForm = () => {
    const dispatch = useDispatch();
    const fileInputRef = useRef(null);
 
+   // начальное сосояние полей
    const [productData, setProductData] = useState({
       category: "",
       name: "",
       description: "",
+      code: "",
       price: "",
       images: [],
    });
 
    const [success, setSuccess] = useState(false);
    const [error, setError] = useState(null);
+
    const [formErrors, setFormErrors] = useState({
       category: false,
       name: false,
       description: false,
       price: false,
       images: false,
+      code: false,
    });
 
    const handleInputChange = (e) => {
       const { name, value } = e.target;
-      setProductData((prev) => ({ ...prev, [name]: value }));
+      setProductData((prev) => ({
+         ...prev,
+         [name]: value.replace(/^\s+/, ""),
+      }));
    };
 
    const handleMultiImageUpload = async (e) => {
@@ -54,15 +62,18 @@ const ProductForm = () => {
       }
    };
 
+   // форма отправки на фаирбуйс данные
    const handleSubmit = async (e) => {
       e.preventDefault();
 
+      // ошибки при заполнеии
       const errors = {
-         category: !productData.category,
-         name: !productData.name,
-         description: !productData.description,
+         category: !productData.category.trim(),
+         name: !productData.name.trim(),
+         description: !productData.description.trim(),
          price: isNaN(productData.price) || productData.price <= 0,
          images: productData.images.length < 2,
+         code: !productData.code.trim(),
       };
 
       setFormErrors(errors);
@@ -83,12 +94,14 @@ const ProductForm = () => {
          setSuccess(true);
          alert("Товар добавлен!");
 
+         // очишаем форму
          setProductData({
             category: "",
             name: "",
             description: "",
             price: "",
             images: [],
+            code: "",
          });
 
          if (fileInputRef.current) fileInputRef.current.value = "";
@@ -102,6 +115,7 @@ const ProductForm = () => {
       <>
          <h3 className={styles["product-form__title"]}>Admin room</h3>
          <div className={styles["product-form"]}>
+            {/* индивидуальный товар  */}
             <form className={styles["form"]} onSubmit={handleSubmit}>
                <h4>
                   <u>Загрузка индивидуального товара</u>
@@ -147,7 +161,7 @@ const ProductForm = () => {
                {/* Описание */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>Описание:</label>
-                  <input
+                  <textarea
                      className={`${styles["form__input"]} ${
                         formErrors.description
                            ? styles["form__input--error"]
@@ -155,8 +169,26 @@ const ProductForm = () => {
                      }`}
                      type="text"
                      name="description"
-                     placeholder="Описание товара"
+                     placeholder="Описание товара (не более 900 символов)"
                      value={productData.description}
+                     onChange={handleInputChange}
+                     maxLength={900}
+                  />
+               </div>
+
+               {/* Код товара / Артикул */}
+               <div className={styles["form__field"]}>
+                  <label className={styles["form__label"]}>
+                     Код товара / Артикул:
+                  </label>
+                  <input
+                     className={`${styles["form__input"]} ${
+                        formErrors.code ? styles["form__input--error"] : ""
+                     }`}
+                     type="text"
+                     name="code"
+                     placeholder="Например: Арт. 1527-091"
+                     value={productData.code}
                      onChange={handleInputChange}
                   />
                </div>
@@ -218,21 +250,30 @@ const ProductForm = () => {
                   </p>
                )}
 
-               <CustomButton onClick={handleSubmit}>
+               <CustomButton
+                  className={styles["form__add-product"]}
+                  onClick={handleSubmit}
+               >
                   Добавить товар
                </CustomButton>
             </form>
 
-            <div className={styles["form__up-load"]}>
-               <h4>
-                  <u>Загрузка файлов типов .CSV</u>
-               </h4>
-               <div className={styles["form__up-load--component"]}>
-                  <CsvUpload />
+            <div className={styles["form__up-load-new"]}>
+               {/* загрузка файлов */}
+               <div className={styles["form__up-load"]}>
+                  <h4>
+                     <u>Загрузка файлов типов .CSV</u>
+                  </h4>
+                  <div className={styles["form__up-load--component"]}>
+                     <CsvUpload />
+                  </div>
+               </div>
+
+               {/* новости */}
+               <div className={styles["form__new"]}>
+                  <AdminNewsEditor />
                </div>
             </div>
-
-            <AdminNewsEditor />
          </div>
       </>
    );

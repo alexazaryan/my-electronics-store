@@ -9,11 +9,12 @@ import {
    BiHeart,
    BiSolidHeart,
 } from "react-icons/bi";
-import styles from "./ProductDetails.module.css";
-
+import CustomButton from "../../components/CustomButton/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "../../store/favoriteSlice";
 import { togglePanel } from "../../store/sidePanelSlice";
+
+import styles from "./ProductDetails.module.css";
 
 const ProductDetails = () => {
    const { id } = useParams();
@@ -193,10 +194,24 @@ const ProductDetails = () => {
             {/* Инфо о товаре */}
             <div className={styles["product-info"]}>
                <h2 className={styles["product-name"]}>{product.name}</h2>
-               <p className={styles["product-description"]}>
-                  {product.description}
+               <p
+                  className={styles["product-description"]}
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+               >
+                  {/* {product.description} */}
                </p>
-               <p className={styles["product-price"]}>Цена: ${product.price}</p>
+               <div>
+                  <p className={styles["product-price"]}>
+                     Цена: {product.price.toLocaleString("uk-UA")} ₴
+                  </p>
+                  <p>
+                     <strong>Код товара:</strong> {product.code}
+                  </p>
+
+                  <CustomButton className={styles["product-price__buy"]}>
+                     Купить
+                  </CustomButton>
+               </div>
             </div>
          </div>
       </div>

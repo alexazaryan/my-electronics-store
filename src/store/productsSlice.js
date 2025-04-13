@@ -20,7 +20,7 @@ export const fetchProducts = createAsyncThunk(
       return productsList;
    }
 );
-// startAfter fetchProducts
+
 // Удаляем товар
 export const deleteProduct = createAsyncThunk(
    "products/deleteProduct",
@@ -80,7 +80,3 @@ const productsSlice = createSlice({
 
 // Только один экспорт
 export default productsSlice.reducer;
-
-// мой
-// мой
-// мой

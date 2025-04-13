@@ -117,7 +117,7 @@
    display: flex;
    flex-direction: column;
    gap: 15px;
-   /* padding: 0 20px; */
+   padding: 0 20px;
 }
 
 .product-name {
@@ -145,8 +145,6 @@
 }
 
 .product-list__favorite-icon {
-   /* border: 2px solid red; */
-
    position: absolute;
    display: flex;
    justify-content: center;
@@ -159,6 +157,17 @@
    background: rgba(255, 255, 255, 0.7);
    cursor: pointer;
    z-index: 2;
+}
+
+.product-price__buy {
+   padding: 10px;
+   background-color: #6e41e2;
+   width: 100%;
+   color: #fff;
+   border: none;
+   border-radius: 7px;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
 }
 
 /* Медиа-запрос для экранов меньше 928px */

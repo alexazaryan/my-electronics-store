@@ -2,6 +2,9 @@
    display: flex;
    flex-wrap: wrap;
    gap: 20px;
+   background-color: antiquewhite;
+   box-sizing: border-box;
+   min-height: 100vh;
 }
 
 .product-form__title {
@@ -9,65 +12,89 @@
    font-size: 2rem;
    color: red;
    margin-bottom: 10px;
-}
-
-.form__up-load {
-   max-width: 500px;
-   padding: 20px;
-   background-color: antiquewhite;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.2);
-}
-
-.form__up-load--component {
-   margin: 20px 0;
+   width: 100%;
 }
 
 .form {
    max-width: 500px;
+   width: 100%;
    display: flex;
    flex-direction: column;
    gap: 15px;
    padding: 20px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.2);
    background-color: antiquewhite;
+   border-radius: 10px;
+   box-sizing: border-box;
 }
 
 .form__field {
-   cursor: "pointer";
    display: flex;
    flex-direction: column;
+   gap: 5px;
 }
 
 .form__label {
    font-weight: bold;
    margin-bottom: 5px;
+   color: #333;
 }
 
-.form__input {
+.form__input,
+.form__fileInput {
    padding: 8px;
    font-size: 14px;
    border: 1px solid #ccc;
    border-radius: 5px;
-}
-
-.form__fileInput {
-   padding: 8px;
-   font-size: 14px;
-}
-
-.form-wrap__add-img {
-   margin-top: 10px;
-   width: 100px;
-   height: 100px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   background-color: white;
-}
-
-.form__image {
+   background-color: #fff;
    width: 100%;
-   height: 100%;
+   box-sizing: border-box;
+}
+
+.form__add-product {
+   background-color: #2563eb;
+   color: white;
+   padding: 10px 16px;
+   border: none;
+   border-radius: 8px;
+   font-size: 1rem;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
+}
+
+textarea.form__input {
+   min-height: 100px;
+   max-height: 200px;
+   resize: vertical;
+   width: 100%;
+   box-sizing: border-box;
+   font-family: inherit;
+   font-size: 14px;
+   padding: 8px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   color: #000;
+}
+
+textarea.form__input,
+textarea.form__input--error {
+   font-family: inherit;
+   font-size: 14px;
+   padding: 8px;
+   border-radius: 5px;
+   width: 100%;
+   resize: vertical;
+   box-sizing: border-box;
+}
+
+/* если ошибка */
+textarea.form__input--error {
+   border: 2px solid red;
+}
+
+.form__input--error,
+.form__fileInput--error {
+   border: 2px solid red;
 }
 
 .form__error {
@@ -80,7 +107,9 @@
    font-size: 14px;
 }
 
-.form__submit {
+.form__submit,
+.form button,
+.custom-button {
    padding: 10px;
    background-color: #4caf50;
    color: white;
@@ -88,23 +117,17 @@
    border: none;
    border-radius: 5px;
    cursor: pointer;
+   transition: background-color 0.3s ease;
 }
 
-.form__submit:hover {
+.form__submit:hover,
+.form button:hover,
+.custom-button:hover {
    background-color: #45a049;
 }
 
-/* подсветка не заполненого поля */
+/* =================== Превью изображений =================== */
 
-.form__input--error {
-   border: 2px solid red;
-}
-
-.form__fileInput--error {
-   border: 2px solid red;
-}
-
-/* -================================================= */
 .form__image-preview-wrap {
    display: flex;
    flex-wrap: wrap;
@@ -124,4 +147,35 @@
    object-fit: cover;
    border-radius: 6px;
    border: 1px solid #ccc;
+}
+
+/* =================== CSV загрузка =================== */
+
+.form__up-load {
+   max-width: 500px;
+   width: 100%;
+   height: auto;
+   padding: 20px;
+   background-color: antiquewhite;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.2);
+   border-radius: 10px;
+   box-sizing: border-box;
+}
+
+.form__up-load--component {
+   margin: 20px 0;
+}
+
+/* =================== Адаптив =================== */
+
+@media (max-width: 768px) {
+   .product-form {
+      flex-direction: column;
+      padding: 20px;
+   }
+
+   .form,
+   .form__up-load {
+      max-width: 100%;
+   }
 }

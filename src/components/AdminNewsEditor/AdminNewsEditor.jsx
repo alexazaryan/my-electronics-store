@@ -28,7 +28,7 @@ const AdminNewsEditor = () => {
 
    return (
       <div className={styles["editor-container"]}>
-         <h2 className={styles["editor-title"]}>Создать новость</h2>
+         <u className={styles["editor-title"]}>Создать новость</u>
 
          <input
             type="text"
