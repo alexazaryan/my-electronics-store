@@ -214,6 +214,7 @@ const ProductDetails = () => {
                </div>
             </div>
          </div>
+         <h4>Похожие товары</h4>
       </div>
    );
 };

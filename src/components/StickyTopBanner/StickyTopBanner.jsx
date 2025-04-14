@@ -10,7 +10,7 @@ const StickyTopBanner = () => {
                alt="delivery truck"
             />
          </div>
-         Быстрая отправка
+         Быстрая доставка по Украине
       </div>
    );
 };

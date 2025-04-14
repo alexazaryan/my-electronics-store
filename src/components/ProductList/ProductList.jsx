@@ -9,8 +9,11 @@ import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import styles from "./ProductList.module.css";
 import { togglePanel } from "../../store/sidePanelSlice";
+import useScrollMemory from "../../hooks/useScrollMemory";
+import ScrollToTopButton from "../ScrollToTopButton/ScrollToTopButton";
 
 const ProductList = () => {
+   useScrollMemory();
    const [selectedProduct, setSelectedProduct] = useState(null);
    const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -71,10 +74,25 @@ const ProductList = () => {
       }
    };
 
+   // отслеживаем часто просматриваемые карточки
+   const trackProductView = (productId) => {
+      const userId = user?.id || "anonymous";
+      const key = `viewedProducts_${userId}`;
+      const viewedItems = JSON.parse(localStorage.getItem(key)) || [];
+
+      // Добавляем ID товара в начало массива и удаляем дубликаты
+      const updatedViews = [
+         productId,
+         ...viewedItems.filter((id) => id !== productId),
+      ].slice(0, 50); // Ограничиваем 50 последними просмотрами
+
+      localStorage.setItem(key, JSON.stringify(updatedViews));
+   };
+
+   // добавление по 36 карточек
    const handleLoadMore = () => {
       setVisibleCount((prev) => {
          const newCount = prev + 36; // увеличиваем на 36
-         sessionStorage.setItem("visibleCount", newCount); // сохраняем в сессии
          return newCount;
       });
    };
@@ -111,13 +129,16 @@ const ProductList = () => {
                      name.charAt(0).toUpperCase() + name.slice(1);
 
                   const hasDiscount = discountMapRef.current[product.id];
-                  const fakeOldPrice = Math.floor(product.price * 1.3);
+                  const fakeOldPrice = Math.floor(product.price * 1.3); // скидки
 
                   return (
                      <li
                         key={product.id}
                         className={styles["product-list__card"]}
-                        onClick={() => navigate(`/product/${product.id}`)}
+                        onClick={() => {
+                           trackProductView(product.id); // трекер частопросматриваемых
+                           navigate(`/product/${product.id}`); // переход на товар
+                        }}
                      >
                         <div className={styles["product-list__img-wrap"]}>
                            <img
@@ -217,15 +238,6 @@ const ProductList = () => {
                                  delete
                               </button>
                            )}
-                           {/* <CustomButton
-                              className={styles["product-ist__custom-button"]}
-                              onClick={(e) => {
-                                 e.stopPropagation();
-                                 console.log("Купить");
-                              }}
-                           >
-                              Купить
-                           </CustomButton> */}
                         </div>
                      </li>
                   );
@@ -243,6 +255,8 @@ const ProductList = () => {
                   Показать еще
                </CustomButton>
             )}
+
+         <ScrollToTopButton />
       </div>
    );
 };

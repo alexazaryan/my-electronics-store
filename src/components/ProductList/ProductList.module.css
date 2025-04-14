@@ -1,6 +1,5 @@
 .product-list__box {
    padding: 1rem 0rem;
-   /* background-color: rgb(245, 237, 227); */
 }
 
 .product-list__ul {
@@ -41,10 +40,6 @@
    text-overflow: ellipsis;
 }
 
-.product-ist__custom-button:hover {
-   background-color: #4f29b1;
-}
-
 .product-list__img-wrap {
    position: relative;
    width: 100%;
@@ -83,7 +78,8 @@
 }
 
 .hidden-for-user {
-   visibility: hidden; /* скрыть контент, но оставить место */
+   /* visibility: hidden;  */
+   display: none;
 }
 
 .old-price {

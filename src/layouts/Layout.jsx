@@ -8,9 +8,11 @@ import HeaderNavigationBlock from "../components/Header/HeaderNavigationBlock";
 import StickyTopBanner from "../components/StickyTopBanner/StickyTopBanner";
 
 import styles from "./Layout.module.css";
+// import ProductCircleSlider from "../components/ProductCircleSlider/ProductCircleSlider";
 
 const Layout = () => {
    const [isSticky, setIsSticky] = useState(false); // фиксировать header
+
    const [showBottomNav, setShowBottomNav] = useState(true); // показать/скрыть нижнюю навигацию
    const bannerRef = useRef(null);
    const lastScrollY = useRef(0);
@@ -60,6 +62,8 @@ const Layout = () => {
          >
             <Header />
          </div>
+
+         {/* <ProductCircleSlider /> */}
 
          <Menu />
          <SidePanel />

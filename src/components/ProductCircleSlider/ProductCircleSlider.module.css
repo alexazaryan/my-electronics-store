@@ -1,0 +1,63 @@
+.sliderContainer {
+   width: 100%;
+   margin: 1rem 0;
+}
+
+.sliderTitle {
+   font-size: 1.5rem;
+   margin-bottom: 1rem;
+   color: #333;
+   text-align: center;
+}
+
+.sliderContainerInner {
+   width: 100%;
+   overflow: hidden;
+}
+
+.sliderContent {
+   display: flex;
+   gap: 1.5rem;
+   padding: 1rem 0;
+   transition: transform 0.1s linear;
+   will-change: transform;
+   touch-action: pan-y; /* 👈 разрешаем горизонтальный свайп */
+}
+
+.productCircle {
+   flex: 0 0 auto;
+   width: 9rem;
+   height: 9rem;
+   border-radius: 50%;
+   background: #f8f8f8;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   transition: transform 0.2s ease, box-shadow 0.2s ease;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.productCircle:hover {
+   transform: scale(1.1);
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.productImage {
+   width: 100%;
+   height: 100%;
+   border-radius: 50%;
+   object-fit: cover;
+   border: 2px solid white;
+}
+
+@media (max-width: 768px) {
+   .productCircle {
+      width: 5rem;
+      height: 5rem;
+   }
+
+   .sliderContent {
+      gap: 1rem;
+   }
+}
