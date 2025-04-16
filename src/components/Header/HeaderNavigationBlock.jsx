@@ -93,9 +93,7 @@ const HeaderNavigationBlock = () => {
          </div>
 
          {/* Кнопка "Корзина" */}
-         {/* <div
-            className={`${styles["icon"]} ${styles["icon-cart"]}`}
-         >
+         {/* <div className={`${styles["icon"]} ${styles["icon-cart"]}`}>
             <BsCartDash size={24} />
             <span>Корзина</span>
          </div> */}

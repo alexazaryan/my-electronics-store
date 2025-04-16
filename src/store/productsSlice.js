@@ -49,11 +49,16 @@ const productsSlice = createSlice({
       items: [],
       status: "idle",
       error: null,
+      selectedProduct: null,
    },
-   reducers: {},
+   reducers: {
+      setSelectedProduct: (state, action) => {
+         state.selectedProduct = action.payload;
+      },
+   },
+
    extraReducers: (builder) => {
       builder
-         // Загрузка
          .addCase(fetchProducts.pending, (state) => {
             state.status = "loading";
          })
@@ -65,18 +70,19 @@ const productsSlice = createSlice({
             state.status = "failed";
             state.error = action.error.message;
          })
-         // Удаление
          .addCase(deleteProduct.fulfilled, (state, action) => {
             state.items = state.items.filter(
                (product) => product.id !== action.payload
             );
          })
-         // Добавление
          .addCase(addProduct.fulfilled, (state, action) => {
             state.items.push(action.payload);
          });
    },
 });
 
-// Только один экспорт
+// ✅ Экспорт экшена
+export const { setSelectedProduct } = productsSlice.actions;
+
+// ✅ Экспорт редьюсера
 export default productsSlice.reducer;

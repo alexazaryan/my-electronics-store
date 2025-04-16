@@ -38,6 +38,11 @@ const ProductList = () => {
       (state) => state.categories.selectedCategory
    );
 
+   // следим за скролом
+   useEffect(() => {
+      sessionStorage.setItem("visibleCount", visibleCount.toString());
+   }, [visibleCount]);
+
    useEffect(() => {
       dispatch(fetchProducts());
    }, [dispatch]);

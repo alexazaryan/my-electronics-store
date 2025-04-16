@@ -12,10 +12,10 @@
 
 .header,
 .footer {
-   max-width: 1600px; /* Ограничение по ширине */
+   max-width: 1600px;
    width: 100%;
-   margin: 0 auto; /* Центрирование */
-   padding: 0 20px; /* Отступы по бокам */
+   margin: 0 auto;
+   padding: 0 20px;
 }
 
 .main-content {
@@ -23,37 +23,12 @@
    max-width: 1600px;
    width: 100%;
    margin: 0 auto;
-   padding: 20px 20px 20px;
+   padding: 20px;
 }
 
 .main-content.withSticky {
-   padding-top: 90px; /* Добавляем только когда header фиксирован */
+   padding-top: 90px;
 }
-
-/* навигация  */
-.stickyBottomMobile {
-   display: flex;
-   justify-content: center; /* Центрируем контент */
-   align-items: center;
-   position: fixed; /* Приклеиваем к экрану */
-   bottom: 0; /* Вниз */
-   left: 0;
-   width: 100%;
-   height: 60px; /* Высота панели (по желанию) */
-   background-color: #fff;
-   background-color: rgb(253, 248, 217);
-
-   border-top: 1px solid #ccc;
-   z-index: 100; /* Поверх всего */
-}
-
-@media (min-width: 768px) {
-   .stickyBottomMobile {
-      display: none; /* Скрыть на планшетах и выше */
-   }
-}
-
-/* ============================================================ */
 
 .stickyHeader {
    position: fixed;
@@ -63,4 +38,70 @@
    z-index: 100;
    background-color: white;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: rgba(0, 0, 0, 0);
+   z-index: 999;
+   opacity: 0;
+   pointer-events: none;
+   transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.overlayVisible {
+   background-color: rgba(0, 0, 0, 0.5);
+   opacity: 1;
+   pointer-events: auto;
+}
+
+.stickyBottomMobile {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 60px;
+   background-color: white;
+   border-top: 1px solid #ccc;
+   z-index: 100;
+   overflow: hidden;
+   transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.stickySlideEnter {
+   opacity: 0;
+   transform: translateY(100%);
+}
+
+.stickySlideEnterActive {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+.stickySlideExit {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+.stickySlideExitActive {
+   opacity: 0;
+   transform: translateY(100%);
+}
+
+.stickyBottomContent {
+   width: 100%;
+   transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+   .stickyBottomMobile {
+      display: none;
+   }
 }

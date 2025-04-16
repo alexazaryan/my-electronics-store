@@ -85,14 +85,14 @@ const ProductCircleSlider = () => {
          }
 
          setPosition((prev) => {
-            const newPos = prev + directionRef.current * 0.3;
+            const newPos = prev + directionRef.current * 0.4;
             if (newPos >= 0) {
                directionRef.current = -1;
-               return prev + directionRef.current * 0.3;
+               return prev + directionRef.current * 0.4;
             }
             if (newPos <= -(contentWidth - containerWidth)) {
                directionRef.current = 1;
-               return prev + directionRef.current * 0.3;
+               return prev + directionRef.current * 0.4;
             }
             return newPos;
          });

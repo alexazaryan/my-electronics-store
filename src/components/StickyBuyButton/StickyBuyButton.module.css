@@ -1,0 +1,62 @@
+.wrapper {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   background-color: #fff;
+   padding: 12px 16px; /* Уменьшил вертикальный padding */
+   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+   z-index: 1000;
+   display: flex;
+   justify-content: space-between;
+   align-items: center; /* Центрируем по вертикали */
+   border-top: 1px solid #ddd;
+   box-sizing: border-box; /* Важно! */
+   height: 64px; /* Фиксированная высота */
+}
+
+.price {
+   font-size: 18px;
+   font-weight: bold;
+   color: #333;
+   white-space: nowrap;
+   margin: 0;
+   padding: 0;
+   line-height: 1; /* Убираем лишнее пространство */
+}
+
+.button {
+   background-color: #28a745;
+   color: white;
+   border: none;
+   padding: 12px 24px; /* Увеличил для баланса */
+   font-size: 16px;
+   border-radius: 8px;
+   cursor: pointer;
+   font-weight: 600;
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   height: 40px; /* Фиксированная высота */
+   box-sizing: border-box;
+   margin: 0;
+   line-height: 1;
+}
+
+/* Остальные стили без изменений */
+.button:hover {
+   background-color: #218838;
+}
+
+.hidden {
+   transform: translateY(100%);
+   opacity: 0;
+   pointer-events: none;
+}
+
+.visible {
+   transform: translateY(0);
+   opacity: 1;
+   pointer-events: auto;
+}
