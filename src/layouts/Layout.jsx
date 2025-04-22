@@ -8,7 +8,6 @@ import HeaderNavigationBlock from "../components/Header/HeaderNavigationBlock";
 import StickyTopBanner from "../components/StickyTopBanner/StickyTopBanner";
 import StickyBuyButton from "../components/StickyBuyButton/StickyBuyButton";
 import { useSelector } from "react-redux";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 import { useLocation } from "react-router-dom";
 
@@ -113,7 +112,6 @@ const Layout = () => {
             <Outlet />
          </main>
 
-    
          {showBottomNav && (
             <div
                className={`${styles["stickyBottomMobile"]} ${

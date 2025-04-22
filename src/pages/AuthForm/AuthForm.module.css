@@ -3,7 +3,8 @@
    margin: 0 auto;
    padding: 0 20px 80px 20px;
 
-   height: 100vh; /* чтобы занять всю высоту экрана */
+   height: 100vh;
+   height: 100dvh;
    overflow-y: auto; /* включаем вертикальную прокрутку */
 }
 

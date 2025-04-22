@@ -4,6 +4,7 @@
    right: -350px;
    width: 350px;
    height: calc(100vh - 0px);
+   height: calc(100dvh - 0px);
    background: rgb(232, 221, 221);
    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
    transition: right 0.3s ease-in-out;

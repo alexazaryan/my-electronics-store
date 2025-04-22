@@ -32,14 +32,14 @@ const SidePanel = () => {
             </CustomButton>
 
             <div className={styles["side-panel__container"]}>
-               <div className={styles["side-panel__wrap-small"]}>
+               {/* <div className={styles["side-panel__wrap-small"]}>
                   <img
                      className={styles["side-panel__small-img"]}
                      // src="/happySmile.png"
                      src={`${import.meta.env.BASE_URL}happySmile.png`}
                      alt="смайлик"
                   />
-               </div>
+               </div> */}
 
                <h3>Хороший выбор! Сохраняем?</h3>
                <p>

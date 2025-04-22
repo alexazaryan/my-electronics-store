@@ -35,13 +35,12 @@
    cursor: pointer;
    font-weight: 600;
    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-   display: inline-flex;
+   display: inline-block;
    align-items: center;
    justify-content: center;
    height: 40px; /* Фиксированная высота */
    box-sizing: border-box;
    margin: 0;
-   line-height: 1;
 }
 
 /* Остальные стили без изменений */

@@ -11,6 +11,7 @@ import styles from "./ProductList.module.css";
 import { togglePanel } from "../../store/sidePanelSlice";
 import useScrollMemory from "../../hooks/useScrollMemory";
 import ScrollToTopButton from "../ScrollToTopButton/ScrollToTopButton";
+import { BsCartDash, BsCartCheck } from "react-icons/bs";
 
 const ProductList = () => {
    useScrollMemory();
@@ -155,7 +156,8 @@ const ProductList = () => {
                               alt={product.name}
                               className={styles["product-list__img"]}
                            />
-                           <div
+                           {/* иконка избранное */}
+                           {/* <div
                               className={styles["product-list__favorite-icon"]}
                               onClick={(e) => {
                                  e.preventDefault();
@@ -178,7 +180,7 @@ const ProductList = () => {
                               ) : (
                                  <BiHeart />
                               )}
-                           </div>
+                           </div> */}
                         </div>
 
                         <div>
@@ -189,9 +191,7 @@ const ProductList = () => {
 
                               <li
                                  className={styles["product-list__description"]}
-                              >
-                                 {/* {product.description || "Описание отсутствует"} */}
-                              </li>
+                              ></li>
 
                               {/* скидки */}
                               <li
@@ -204,14 +204,45 @@ const ProductList = () => {
                                  {fakeOldPrice.toLocaleString("uk-UA")} ₴
                               </li>
 
-                              <li
-                                 className={
-                                    hasDiscount
-                                       ? styles["discount-price"]
-                                       : styles["normal-price"]
-                                 }
-                              >
-                                 {product.price.toLocaleString("uk-UA")} ₴
+                              <li className={styles["product-action-row"]}>
+                                 <div className={styles["price-block"]}>
+                                    <span
+                                       className={
+                                          hasDiscount
+                                             ? styles["discount-price"]
+                                             : styles["normal-price"]
+                                       }
+                                    >
+                                       {product.price.toLocaleString("uk-UA")} ₴
+                                    </span>
+
+                                    <span
+                                       className={styles["product-list-icon"]}
+                                       onClick={(e) => {
+                                          e.preventDefault();
+                                          e.stopPropagation();
+                                          if (!isRegistered) {
+                                             dispatch(togglePanel());
+                                          } else {
+                                             dispatch(
+                                                toggleFavorite(product.id)
+                                             );
+                                          }
+                                       }}
+                                    >
+                                       {isFavorite ? (
+                                          <BsCartCheck
+                                             style={{
+                                                fill: "red",
+                                                stroke: "green",
+                                                strokeWidth: "1px",
+                                             }}
+                                          />
+                                       ) : (
+                                          <BsCartDash />
+                                       )}
+                                    </span>
+                                 </div>
                               </li>
 
                               <li

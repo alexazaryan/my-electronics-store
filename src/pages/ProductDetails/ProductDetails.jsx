@@ -265,6 +265,7 @@ const ProductDetails = () => {
                         {product.price.toLocaleString("uk-UA")} ₴
                      </li>
                      <li className={styles["product-cart-icon"]}>
+                        
                         {/* добавить в корзину */}
                         <BsCartDash />
                      </li>

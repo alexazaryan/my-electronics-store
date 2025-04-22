@@ -1,7 +1,7 @@
-import { PiTelegramLogoDuotone } from "react-icons/pi";
-import { BsInstagram } from "react-icons/bs"; 
-import { BsWhatsapp } from "react-icons/bs";
+// компонент футера со всеми контактами и соцсетями
 
+import { PiTelegramLogoDuotone } from "react-icons/pi";
+import { BsInstagram, BsWhatsapp } from "react-icons/bs";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
@@ -9,54 +9,65 @@ const Footer = () => {
       <div className={styles["footer-wrap"]}>
          <div className={styles["footer"]}>
             <div className={styles["footer-content"]}>
+               {/* Блок "О нас" */}
                <div className={styles["footer-section"]}>
                   <h3 className={styles["footer-title"]}>О нас</h3>
                   <p className={styles["footer-text"]}>
-                     Мы предлагаем лучшие товары по отличным ценам.
-                     Подписывайтесь на нас в соцсетях!
+                     TechZone – магазин электроники и аксессуаров. Доставляем по
+                     всей Украине. Надёжно, быстро и с заботой.
                   </p>
                </div>
+
+               {/* Блок контактов */}
                <div className={styles["footer-section"]}>
                   <h3 className={styles["footer-title"]}>Контакты</h3>
                   <p className={styles["footer-text"]}>
-                     Email: support@example.com
+                     Email: info@techzone.com.ua
                   </p>
                   <p className={styles["footer-text"]}>
-                     Телефон: +38 555 555 555
+                     Телефон: +38 (098) 123 45 67 (Пн–Пт 9:00–18:00)
+                  </p>
+                  <p className={styles["footer-text"]}>
+                     Адрес: г. Киев, ул. Электриков, 10
                   </p>
                </div>
+
+               {/* Блок соцсетей */}
                <div className={styles["footer-section"]}>
-                  <h3 className={styles["footer-title"]}>Социальные сети</h3>
+                  <h3 className={styles["footer-title"]}>Мы в соцсетях</h3>
                   <div className={styles["footer-icons"]}>
                      <a
-                        href="https://t.me/your_telegram_link"
+                        href="https://t.me/techzone_support"
                         target="_blank"
+                        rel="noopener noreferrer"
                         className={styles["footer-icon"]}
                      >
-                        <PiTelegramLogoDuotone
-                           className={styles["telegram-icon"]}
-                        />
+                        <PiTelegramLogoDuotone />
                      </a>
                      <a
-                        href="https://www.instagram.com/your_instagram_link"
+                        href="https://www.instagram.com/techzone_ua"
                         target="_blank"
+                        rel="noopener noreferrer"
                         className={styles["footer-icon"]}
                      >
-                        <BsInstagram className={styles["instagram-icon"]} />
+                        <BsInstagram />
                      </a>
                      <a
-                        href="https://wa.me/your_viber_link"
+                        href="https://wa.me/380981234567"
                         target="_blank"
+                        rel="noopener noreferrer"
                         className={styles["footer-icon"]}
                      >
-                        <BsWhatsapp className={styles["whatsapp-icon"]} />
+                        <BsWhatsapp />
                      </a>
                   </div>
                </div>
             </div>
+
+            {/* Низ футера */}
             <div className={styles["footer-bottom"]}>
                <p className={styles["footer-text"]}>
-                  © 2025 Все права защищены.
+                  © 2025 TechZone. Все права защищены.
                </p>
             </div>
          </div>

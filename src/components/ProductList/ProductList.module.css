@@ -53,12 +53,35 @@
    object-fit: cover;
 }
 
+/* ==================== */
+.product-list-icon {
+   font-size: 20px;
+   color: #ff8c00;
+   cursor: pointer;
+}
+
+.product-action-row {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.price-block {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+   align-items: center;
+}
+
+/* ==================== */
+
 .preloader {
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
    height: 100vh;
+   height: 100dvh;
    width: 100%;
 }
 

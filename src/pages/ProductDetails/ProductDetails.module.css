@@ -187,12 +187,13 @@
 /* Стили для правого блока (информация о товаре) */
 .product-info {
    flex: 0 0 50%;
-   max-width: 50%;
+   width: 100%;
    height: auto;
    display: flex;
    flex-direction: column;
    padding: 20px;
    background-color: white;
+
    border-radius: 10px;
    box-sizing: border-box;
 }
@@ -234,7 +235,6 @@
 .product-price__buy {
    padding: 12px;
    background-color: #6e41e2;
-   width: 100%;
    color: #fff;
    border: none;
    border-radius: 7px;

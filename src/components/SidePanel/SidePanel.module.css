@@ -1,16 +1,18 @@
 .side-panel__wrap {
-   background-color: rgb(221, 177, 254); /* фон панели */
+   background-color: rgb(250, 247, 252);
    position: fixed;
    top: 0;
    right: -350px;
    width: 350px;
    height: 100vh;
+   height: 100dvh;
    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
    transition: right 0.3s ease-in-out;
    z-index: 1001;
    border-radius: 10px 0 0 10px;
 
    display: flex; /* позволяет вложенному контейнеру растянуться */
+
    flex-direction: column;
 }
 
@@ -47,6 +49,13 @@
 }
 
 .side-panel__container {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   width: 100%;
+   height: 100vh;
+   height: 100dvh;
    overflow-y: auto;
    text-align: center;
    padding: 20px;
@@ -60,16 +69,8 @@
    margin: 20px 0;
 }
 
-.side-panel__wrap-small {
-   max-width: 550px;
-}
-
-.side-panel__small-img {
-   width: 100%;
-   object-fit: cover;
-}
-
 .side-panel__custom-button-enter {
+   width: 100%;
    margin-top: 30px;
    padding: 10px;
    border-radius: 5px;
@@ -78,6 +79,7 @@
 }
 
 .side-panel__custom-button-registration {
+   width: 100%;
    margin-bottom: 30px;
    padding: 10px;
    border-radius: 5px;

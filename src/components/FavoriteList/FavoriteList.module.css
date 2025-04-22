@@ -9,8 +9,8 @@
    z-index: 1002;
    border-radius: 10px 0 0 10px;
 
-   /* height: 100vh; */
-   height: 100dvh; /* учитываем изменение размера экрана с появлением браузерного меню */
+   height: 100vh;
+   height: 100dvh;
    display: flex; /* делаем вертикальный флекс */
    flex-direction: column; /* чтобы wrap и total шли друг за другом */
 }

@@ -1,18 +1,20 @@
+/* обёртка футера */
 .footer-wrap {
    width: 100%;
-   text-align: center;
    background-color: #6e41e2;
    color: #fff;
-   padding: 20px 0;
+   padding: 30px 0;
+   text-align: center;
 }
 
+/* контейнер */
 .footer {
    max-width: 1600px;
-   width: 100%;
    margin: 0 auto;
    padding: 0 20px;
 }
 
+/* основной контент */
 .footer-content {
    display: flex;
    justify-content: space-between;
@@ -22,43 +24,49 @@
    border-bottom: 1px solid #444;
 }
 
+/* секции футера */
 .footer-section {
    flex: 1;
    min-width: 250px;
 }
 
+/* заголовки секций */
 .footer-title {
    font-size: 18px;
    margin-bottom: 10px;
    color: #f8c400;
 }
 
+/* обычный текст */
 .footer-text {
    font-size: 14px;
-   line-height: 1.5;
+   line-height: 1.6;
+   margin-bottom: 8px;
 }
 
+/* иконки соцсетей */
 .footer-icons {
    display: flex;
    justify-content: center;
-   gap: 10px;
+   gap: 15px;
+   margin-top: 10px;
 }
 
+/* ссылка-иконка */
 .footer-icon {
-   display: inline-block;
-   text-decoration: none;
+   font-size: 1.8rem;
    color: white;
-   font-size: 1.6rem;
-   margin: 5px 10px;
    transition: color 0.3s ease;
 }
 
+/* при наведении */
 .footer-icon:hover {
    color: #ffeb3b;
 }
 
+/* нижняя часть футера */
 .footer-bottom {
-   padding: 10px 0;
+   padding: 15px 0;
    font-size: 12px;
-   color: #aaa;
+   color: #ccc;
 }
