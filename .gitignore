@@ -1,6 +1,5 @@
 # utils
 .env
-src/utils/config.js
 
 # Logs
 logs
