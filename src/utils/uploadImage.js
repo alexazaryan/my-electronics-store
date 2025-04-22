@@ -1,5 +1,5 @@
 // src/utils/uploadImage.js
-import { IMGBB_API_KEY } from "./config"; // Импортируем API-ключ
+import { IMGBB_API_KEY } from "./config.js"; // Импортируем API-ключ
 
 export const uploadImageToImgBB = async (file) => {
    const formData = new FormData();
