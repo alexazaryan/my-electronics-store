@@ -1,4 +1,8 @@
 .auth-form-container {
+   display: flex;
+   flex-direction: column;
+   /* align-items: center; */
+   justify-content: center;
    max-width: 400px;
    margin: 0 auto;
    padding: 0 20px 80px 20px;
@@ -74,17 +78,11 @@
    margin: 0 10px;
 }
 
-.auth-form-container__wrap-welcome-emoji-img {
-   max-width: 550px;
-}
+
 
 .auth-form-container__welcome-emoji-img {
    object-fit: cover;
    width: 100%;
-}
-
-.auth-form-container__wrap-emoji-pointer {
-   max-width: 550px;
 }
 
 .auth-form-container__emoji-pointer {

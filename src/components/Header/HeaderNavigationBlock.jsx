@@ -108,13 +108,13 @@ const HeaderNavigationBlock = () => {
          </div>
 
          {/* Затемняющий слой */}
-         <div
+         {/* <div
             className={`${styles.overlay} ${
                isCategoryListVisible || isFavoritesVisible || isOverlayVisible
                   ? styles.visible
                   : ""
             }`}
-         ></div>
+         ></div> */}
       </div>
    );
 };

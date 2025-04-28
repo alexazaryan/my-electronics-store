@@ -1,4 +1,3 @@
-// src/utils/uploadImage.js
 import { IMGBB_API_KEY } from "./config.js"; // Импортируем API-ключ
 
 export const uploadImageToImgBB = async (file) => {

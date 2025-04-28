@@ -1,17 +1,61 @@
 .banner {
+   width: 100%;
+   height: 40px;
+   background-color: gold;
    display: flex;
    justify-content: center;
    align-items: center;
-   font-weight: bold;
-   width: 100%;
-   background-color: gold;
+   overflow: hidden;
+   position: relative;
 }
 
-.banner__wrap-img {
-   margin: 0 10px;
+.bannerContent {
+   position: absolute;
+   display: flex;
+   align-items: center;
+   transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.bannerImg {
    width: 40px;
+   margin-right: 10px;
 }
 
-.banner__img-car {
-   width: 100%;
+.bannerText {
+   font-weight: bold;
+}
+
+.active {
+   transform: translateY(0);
+   opacity: 1;
+}
+
+.hidden {
+   opacity: 0;
+}
+
+.enter {
+   transform: translateY(-100%);
+   opacity: 0;
+   animation: enterAnim 0.3s forwards;
+}
+
+.exit {
+   transform: translateY(0);
+   opacity: 1;
+   animation: exitAnim 0.3s forwards;
+}
+
+@keyframes enterAnim {
+   to {
+      transform: translateY(0);
+      opacity: 1;
+   }
+}
+
+@keyframes exitAnim {
+   to {
+      transform: translateY(100%);
+      opacity: 0;
+   }
 }

@@ -8,7 +8,7 @@ const ProductCircleSlider = () => {
    const products = useSelector((state) => state.products.items);
    const user = useSelector((state) => state.auth.user);
    const [displayProducts, setDisplayProducts] = useState([]);
-   const wrapperRef = useRef(null); // ref на внешний div
+   const wrapperRef = useRef(null);
    const containerRef = useRef(null);
    const contentRef = useRef(null);
    const animationRef = useRef(null);
@@ -17,6 +17,10 @@ const ProductCircleSlider = () => {
    const [isHovered, setIsHovered] = useState(false);
    const touchStartX = useRef(null);
    const [isVisible, setIsVisible] = useState(true);
+
+   const selectedCategory = useSelector(
+      (state) => state.categories.selectedCategory
+   );
 
    // Наблюдение за областью видимости
    useEffect(() => {
@@ -35,34 +39,70 @@ const ProductCircleSlider = () => {
       };
    }, []);
 
-   // Получение товаров
+   // получение товаров
    useEffect(() => {
       const getDisplayProducts = () => {
          const userId = user?.id || "anonymous";
          const key = `viewedProducts_${userId}`;
          const viewedItems = JSON.parse(localStorage.getItem(key)) || [];
 
+         // Если категория не выбрана — показать любые 15 случайных
+         if (!selectedCategory) {
+            return [...products].sort(() => 0.5 - Math.random()).slice(0, 15);
+         }
+
+         // Сначала просмотренные в выбранной категории
          const viewed = viewedItems
-            .map((id) => products.find((p) => p.id === id))
+            .map((id) =>
+               products.find(
+                  (p) => p.id === id && p.category === selectedCategory
+               )
+            )
             .filter(Boolean)
             .slice(0, 15);
 
-         if (viewed.length < 15) {
-            const remaining = 15 - viewed.length;
-            const available = products.filter(
-               (p) => !viewedItems.includes(p.id)
+         const remaining = 15 - viewed.length;
+
+         if (remaining > 0) {
+            // Добираем из той же категории
+            const sameCategory = products.filter(
+               (p) =>
+                  !viewedItems.includes(p.id) &&
+                  p.category === selectedCategory &&
+                  !viewed.includes(p)
             );
-            const random = [...available]
+
+            const sameCategoryFill = [...sameCategory]
                .sort(() => 0.5 - Math.random())
                .slice(0, remaining);
-            return [...viewed, ...random];
+
+            const total = [...viewed, ...sameCategoryFill];
+            const stillNeed = 15 - total.length;
+
+            if (stillNeed > 0) {
+               // Добираем из других категорий
+               const otherProducts = products.filter(
+                  (p) =>
+                     !viewedItems.includes(p.id) &&
+                     p.category !== selectedCategory &&
+                     !total.includes(p)
+               );
+
+               const otherFill = [...otherProducts]
+                  .sort(() => 0.5 - Math.random())
+                  .slice(0, stillNeed);
+
+               return [...total, ...otherFill];
+            }
+
+            return total;
          }
 
          return viewed;
       };
 
       setDisplayProducts(getDisplayProducts());
-   }, [products, user]);
+   }, [products, user, selectedCategory]);
 
    // Анимация
    useEffect(() => {

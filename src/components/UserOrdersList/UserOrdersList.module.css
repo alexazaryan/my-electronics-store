@@ -1,0 +1,246 @@
+.blok__oder {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+   padding: 20px;
+   margin-top: 20px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.2);
+   background-color: antiquewhite;
+   border-radius: 10px;
+   box-sizing: border-box;
+}
+
+.fixedFilters {
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   position: sticky;
+   top: 80px;
+   background-color: antiquewhite;
+   z-index: 10;
+   padding: 10px 0;
+   border-bottom: 2px solid #ccc;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.filtersContainer {
+   display: flex;
+   gap: 20px;
+   flex-wrap: wrap;
+   padding: 10px;
+}
+
+.selectControl {
+   padding: 8px 12px;
+   font-size: 1rem;
+   border-radius: 6px;
+   border: 1px solid #ccc;
+   background-color: white;
+   cursor: pointer;
+}
+
+.counterRow {
+   display: flex;
+   justify-content: flex-start;
+   gap: 20px;
+   padding: 10px;
+   font-size: 15px;
+   font-weight: 500;
+   color: #555;
+   flex-wrap: wrap;
+}
+
+.orderItem {
+   background: #fff7e6;
+   border: 1px solid #ccc;
+   border-radius: 12px;
+   padding: 20px;
+   margin-bottom: 20px;
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.orderHeader {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: 10px;
+}
+
+.orderTitle {
+   font-size: 1.4rem;
+   font-weight: bold;
+   color: #333;
+}
+
+.orderActions {
+   display: flex;
+   gap: 10px;
+   flex-wrap: wrap;
+}
+
+.checkButton,
+.restoreButton,
+.deleteButton {
+   padding: 8px 14px;
+   border: none;
+   border-radius: 6px;
+   font-size: 14px;
+   cursor: pointer;
+   color: white;
+}
+
+.checkButton {
+   background-color: green;
+}
+
+.checkButtonProcessed {
+   background-color: gray;
+   margin-right: 10px;
+}
+
+.restoreButton {
+   background-color: blue;
+}
+
+.deleteButton {
+   background-color: red;
+}
+
+.orderInfo {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   gap: 10px;
+   font-size: 15px;
+}
+
+.productList {
+   margin-top: 10px;
+   padding: 0;
+   list-style: none;
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+}
+
+.productItem {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background: #fff;
+   padding: 10px;
+   border-radius: 8px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.productLink {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   text-decoration: none;
+   color: inherit;
+   flex: 1;
+}
+
+.productImage {
+   width: 50px;
+   height: 50px;
+   object-fit: cover;
+   border-radius: 6px;
+}
+
+.productControls {
+   display: flex;
+   gap: 8px;
+}
+
+.decreaseButton,
+.increaseButton,
+.deleteProductButton {
+   padding: 5px 8px;
+   border: none;
+   border-radius: 6px;
+   font-size: 14px;
+   cursor: pointer;
+   color: white;
+}
+
+.decreaseButton {
+   background-color: orange;
+}
+
+.increaseButton {
+   background-color: dodgerblue;
+}
+
+.deleteProductButton {
+   background-color: #ff6600;
+}
+
+.total {
+   margin-top: 10px;
+   font-size: 1.1rem;
+   font-weight: bold;
+   color: #333;
+}
+
+.noteContainer {
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   margin-top: 10px;
+}
+
+.noteLabel {
+   font-weight: 600;
+   font-size: 14px;
+   color: #555;
+}
+
+.noteInput {
+   padding: 8px 12px;
+   border-radius: 6px;
+   border: 1px solid #ccc;
+   font-size: 14px;
+   width: 100%;
+   max-width: 400px;
+   box-sizing: border-box;
+}
+
+.searchInput {
+   padding: 8px 12px;
+   font-size: 1rem;
+   border-radius: 6px;
+   border: 1px solid #ccc;
+   background-color: white;
+   width: 200px;
+}
+
+.orderCode {
+   margin-top: -10px; /* Чуть ближе к "Заказ №" */
+   font-size: 1rem; /* Чуть крупнее, чтобы не терялся */
+   font-weight: 600; /* Сделать более заметным */
+   color: #555; /* Тот же тон серого, как в остальном интерфейсе */
+   display: inline-block;
+}
+
+/* 📱 Адаптив под телефоны */
+@media (max-width: 600px) {
+   .orderInfo {
+      grid-template-columns: 1fr;
+   }
+
+   .productItem {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+   }
+
+   .productControls {
+      align-self: flex-end;
+   }
+}

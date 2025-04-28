@@ -4,7 +4,7 @@
    right: -350px;
    width: 350px;
    height: 100dvh;
-   background: rgb(147, 224, 135);
+   background: white;
    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
    transition: right 0.3s ease-in-out;
    z-index: 1002;
@@ -14,7 +14,6 @@
    align-items: center;
    padding: 0 0 20px;
 
-   /*  */
    overflow-y: auto;
    scrollbar-width: none;
 }
@@ -32,18 +31,19 @@
 
 .category-button {
    width: 80%;
-   background-color: #f0f0f0;
+   background-color: white;
    border: 1px solid #ccc;
    padding: 10px;
    cursor: pointer;
    border-radius: 5px;
-   font-size: 1.2rem;
+   font-size: 1rem;
    margin: 5px 0;
    transition: background-color 0.3s;
 }
 
 .category-button:hover {
    background-color: #ddd;
+   color: green;
 }
 
 .category-button.active {

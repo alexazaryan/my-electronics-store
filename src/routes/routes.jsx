@@ -4,6 +4,7 @@ import ProductForm from "../pages/ProductForm/ProductForm";
 import Home from "../pages/Home/Home";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import AdminRoute from "../components/AdminRoute/AdminRoute";
+import AdminOrdersPage from "../pages/AdminOrdersPage/AdminOrdersPage";
 
 const AppRoutes = () => {
    return (
@@ -19,6 +20,16 @@ const AppRoutes = () => {
                   </AdminRoute>
                }
             />
+
+            <Route
+               path="admin-orders"
+               element={
+                  <AdminRoute>
+                     <AdminOrdersPage />
+                  </AdminRoute>
+               }
+            />
+
             <Route path="/product/:id" element={<ProductDetails />} />
          </Route>
       </Routes>

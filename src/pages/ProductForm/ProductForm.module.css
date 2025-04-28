@@ -2,10 +2,7 @@
    display: flex;
    flex-wrap: wrap;
    gap: 20px;
-   background-color: antiquewhite;
    box-sizing: border-box;
-   /* min-height: 100vh; */
-   min-height: 100dvh;
 }
 
 .product-form__title {
@@ -27,6 +24,30 @@
    background-color: antiquewhite;
    border-radius: 10px;
    box-sizing: border-box;
+}
+
+.form__orders {
+   margin-bottom: 20px;
+   max-width: 500px;
+   width: 100%;
+   height: auto;
+   padding: 20px;
+   background-color: antiquewhite;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.2);
+   border-radius: 10px;
+   box-sizing: border-box;
+}
+
+.form__go-to-orders {
+   background-color: #2563eb;
+   color: white;
+   padding: 10px 16px;
+
+   border: none;
+   border-radius: 8px;
+   font-size: 1rem;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
 }
 
 .form__field {

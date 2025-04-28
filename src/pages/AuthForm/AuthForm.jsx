@@ -161,14 +161,6 @@ const AuthForm = () => {
    if (user) {
       return (
          <div className={styles["auth-form-container"]}>
-            <div className="auth-form-container__wrap-welcome-emoji-img">
-               <img
-                  className={styles["auth-form-container__welcome-emoji-img"]}
-                  // src="/welcome-emoji.png"
-                  src={`${import.meta.env.BASE_URL}welcome-emoji.png`}
-                  alt="веселый смайлик"
-               />
-            </div>
             <h2 className={styles["auth-form-title"]}>Вы вошли в систему</h2>
             <p>
                <strong>Email:</strong>
@@ -195,14 +187,6 @@ const AuthForm = () => {
    return (
       <div className={styles["auth-form-container"]}>
          <form onSubmit={handleSubmit} className={styles["auth-form"]}>
-            <div className={styles["auth-form-container__wrap-emoji-pointer"]}>
-               <img
-                  // src="/emoji-pointer.png"
-                  src={`${import.meta.env.BASE_URL}emoji-pointer.png`}
-                  alt="смайлик регистрации или входа"
-                  className={styles["auth-form-container__emoji-pointer"]}
-               />
-            </div>
             <h2 className={styles["auth-form-title"]}>
                {isLogin ? "Вход" : "Регистрация"}
             </h2>

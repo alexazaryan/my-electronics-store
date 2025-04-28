@@ -7,6 +7,7 @@ import favoriteReducer from "./favoriteSlice";
 import searchReducer from "./searchSlice";
 import sidePanelReducer from "./sidePanelSlice";
 import newsReducer from "./newsSlice";
+import orderHistoryReducer from "./orderHistorySlice";
 
 const store = configureStore({
    reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
       search: searchReducer, //поисковик
       sidePanel: sidePanelReducer, //бокавая панель
       news: newsReducer, // новосити
+      orderHistory: orderHistoryReducer, // истории заказов
    },
 });
 

@@ -4,7 +4,7 @@ import {
    setSelectedCategory,
    fetchCategories,
 } from "../../store/categoriesSlice";
-import { toggleCategoryList, closeMenu } from "../../store/menuSlice";
+import { toggleCategoryList } from "../../store/menuSlice";
 import CustomButton from "../CustomButton/CustomButton";
 
 import styles from "./CategoryList.module.css";
@@ -54,7 +54,6 @@ const CategoryList = React.forwardRef(({ isVisible }, ref) => {
                      onClick={() => {
                         handleCategorySelect(category);
                         handleClose();
-                        // dispatch(closeMenu());
                      }}
                   >
                      {category}

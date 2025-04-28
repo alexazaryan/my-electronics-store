@@ -7,11 +7,12 @@ import Spinner from "../Spinner/Spinner";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
-import styles from "./ProductList.module.css";
 import { togglePanel } from "../../store/sidePanelSlice";
 import useScrollMemory from "../../hooks/useScrollMemory";
 import ScrollToTopButton from "../ScrollToTopButton/ScrollToTopButton";
 import { BsCartDash, BsCartCheck } from "react-icons/bs";
+
+import styles from "./ProductList.module.css";
 
 const ProductList = () => {
    useScrollMemory();
@@ -124,40 +125,42 @@ const ProductList = () => {
                <p>Товаров нет.</p>
             </div>
          ) : (
-            <ul className={styles["product-list__ul"]}>
-               {filteredProducts.slice(0, visibleCount).map((product) => {
-                  const isFavorite = favorites.some(
-                     (fav) => fav.productId === product.id
-                  );
+            <div>
+               <h2>Лучшие предложения</h2>
+               <ul className={styles["product-list__ul"]}>
+                  {filteredProducts.slice(0, visibleCount).map((product) => {
+                     const isFavorite = favorites.some(
+                        (fav) => fav.productId === product.id
+                     );
 
-                  const name = product.name;
-                  const capitalized =
-                     name.charAt(0).toUpperCase() + name.slice(1);
+                     const name = product.name;
+                     const capitalized =
+                        name.charAt(0).toUpperCase() + name.slice(1);
 
-                  const hasDiscount = discountMapRef.current[product.id];
-                  const fakeOldPrice = Math.floor(product.price * 1.3); // скидки
+                     const hasDiscount = discountMapRef.current[product.id];
+                     const fakeOldPrice = Math.floor(product.price * 1.3); // скидки
 
-                  return (
-                     <li
-                        key={product.id}
-                        className={styles["product-list__card"]}
-                        onClick={() => {
-                           trackProductView(product.id); // трекер частопросматриваемых
-                           navigate(`/product/${product.id}`); // переход на товар
-                        }}
-                     >
-                        <div className={styles["product-list__img-wrap"]}>
-                           <img
-                              src={
-                                 product.images?.[0] ||
-                                 product.imageUrl?.split(",")[0] ||
-                                 "/logo.png"
-                              }
-                              alt={product.name}
-                              className={styles["product-list__img"]}
-                           />
-                           {/* иконка избранное */}
-                           {/* <div
+                     return (
+                        <li
+                           key={product.id}
+                           className={styles["product-list__card"]}
+                           onClick={() => {
+                              trackProductView(product.id); // трекер частопросматриваемых
+                              navigate(`/product/${product.id}`); // переход на товар
+                           }}
+                        >
+                           <div className={styles["product-list__img-wrap"]}>
+                              <img
+                                 src={
+                                    product.images?.[0] ||
+                                    product.imageUrl?.split(",")[0] ||
+                                    "/logo.png"
+                                 }
+                                 alt={product.name}
+                                 className={styles["product-list__img"]}
+                              />
+                              {/* иконка избранное */}
+                              {/* <div
                               className={styles["product-list__favorite-icon"]}
                               onClick={(e) => {
                                  e.preventDefault();
@@ -181,104 +184,115 @@ const ProductList = () => {
                                  <BiHeart />
                               )}
                            </div> */}
-                        </div>
+                           </div>
 
-                        <div>
-                           <ul className={styles["product-list__wrap-title"]}>
-                              <li className={styles["product-list__name"]}>
-                                 {capitalized}
-                              </li>
-
-                              <li
-                                 className={styles["product-list__description"]}
-                              ></li>
-
-                              {/* скидки */}
-                              <li
-                                 className={
-                                    hasDiscount
-                                       ? styles["old-price"]
-                                       : styles["invisible"]
-                                 }
+                           <div>
+                              <ul
+                                 className={styles["product-list__wrap-title"]}
                               >
-                                 {fakeOldPrice.toLocaleString("uk-UA")} ₴
-                              </li>
+                                 <li className={styles["product-list__name"]}>
+                                    {capitalized}
+                                 </li>
 
-                              <li className={styles["product-action-row"]}>
-                                 <div className={styles["price-block"]}>
-                                    <span
-                                       className={
-                                          hasDiscount
-                                             ? styles["discount-price"]
-                                             : styles["normal-price"]
-                                       }
-                                    >
-                                       {product.price.toLocaleString("uk-UA")} ₴
-                                    </span>
+                                 <li
+                                    className={
+                                       styles["product-list__description"]
+                                    }
+                                 ></li>
 
-                                    <span
-                                       className={styles["product-list-icon"]}
-                                       onClick={(e) => {
-                                          e.preventDefault();
-                                          e.stopPropagation();
-                                          if (!isRegistered) {
-                                             dispatch(togglePanel());
-                                          } else {
-                                             dispatch(
-                                                toggleFavorite(product.id)
-                                             );
+                                 {/* скидки */}
+                                 <li
+                                    className={
+                                       hasDiscount
+                                          ? styles["old-price"]
+                                          : styles["invisible"]
+                                    }
+                                 >
+                                    {fakeOldPrice.toLocaleString("uk-UA")} ₴
+                                 </li>
+
+                                 <li className={styles["product-action-row"]}>
+                                    <div className={styles["price-block"]}>
+                                       <span
+                                          className={
+                                             hasDiscount
+                                                ? styles["discount-price"]
+                                                : styles["normal-price"]
                                           }
-                                       }}
-                                    >
-                                       {isFavorite ? (
-                                          <BsCartCheck
-                                             style={{
-                                                fill: "red",
-                                                stroke: "green",
-                                                strokeWidth: "1px",
-                                             }}
-                                          />
-                                       ) : (
-                                          <BsCartDash />
-                                       )}
-                                    </span>
-                                 </div>
-                              </li>
+                                       >
+                                          {product.price.toLocaleString(
+                                             "uk-UA"
+                                          )}{" "}
+                                          ₴
+                                       </span>
 
-                              <li
-                                 style={{ color: "red" }}
-                                 className={
-                                    !isAdmin ? styles["hidden-for-user"] : ""
-                                 }
-                              >
-                                 Дроп&nbsp;
-                                 {product.purchase?.toLocaleString("uk-UA") ||
-                                    "—"}
-                                 &nbsp;₴
-                              </li>
-                           </ul>
-                        </div>
+                                       <span
+                                          className={
+                                             styles["product-list-icon"]
+                                          }
+                                          onClick={(e) => {
+                                             e.preventDefault();
+                                             e.stopPropagation();
+                                             if (!isRegistered) {
+                                                dispatch(togglePanel());
+                                             } else {
+                                                dispatch(
+                                                   toggleFavorite(product.id)
+                                                );
+                                             }
+                                          }}
+                                       >
+                                          {isFavorite ? (
+                                             <BsCartCheck
+                                                style={{
+                                                   fill: "red",
+                                                   stroke: "green",
+                                                   strokeWidth: "1px",
+                                                }}
+                                             />
+                                          ) : (
+                                             <BsCartDash />
+                                          )}
+                                       </span>
+                                    </div>
+                                 </li>
 
-                        <div className={styles["product-ist__wrap-button"]}>
-                           {isAdmin && (
-                              <button
-                                 className={
-                                    styles["product-ist__delete-button"]
-                                 }
-                                 onClick={(e) => {
-                                    e.stopPropagation();
-                                    setIsModalOpen(true);
-                                    setSelectedProduct(product);
-                                 }}
-                              >
-                                 delete
-                              </button>
-                           )}
-                        </div>
-                     </li>
-                  );
-               })}
-            </ul>
+                                 <li
+                                    style={{ color: "red" }}
+                                    className={
+                                       !isAdmin ? styles["hidden-for-user"] : ""
+                                    }
+                                 >
+                                    Дроп&nbsp;
+                                    {product.purchase?.toLocaleString(
+                                       "uk-UA"
+                                    ) || "—"}
+                                    &nbsp;₴
+                                 </li>
+                              </ul>
+                           </div>
+
+                           <div className={styles["product-ist__wrap-button"]}>
+                              {isAdmin && (
+                                 <button
+                                    className={
+                                       styles["product-ist__delete-button"]
+                                    }
+                                    onClick={(e) => {
+                                       e.stopPropagation();
+                                       setIsModalOpen(true);
+                                       setSelectedProduct(product);
+                                    }}
+                                 >
+                                    delete
+                                 </button>
+                              )}
+                           </div>
+                        </li>
+                     );
+                  })}
+               </ul>
+            </div>
          )}
 
          {status === "succeeded" &&

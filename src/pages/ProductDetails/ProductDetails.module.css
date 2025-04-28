@@ -146,9 +146,16 @@
 
 .description-collapsed {
    position: relative;
-   max-height: 3.5em; /* 3 строки */
+   max-height: 3.5em;
    overflow: hidden;
-   line-height: 1.5em; /* Должно совпадать с line-height основного текста */
+   line-height: 1.5em;
+   transition: max-height 1s ease;
+   padding-bottom: 20px;
+}
+
+.expanded {
+   padding-bottom: 20px;
+   max-height: 1000px; /* большое значение */
 }
 
 .description-collapsed::after {
@@ -292,7 +299,7 @@
 
 .product-cart-icon {
    font-size: 30px;
-   color: gray;
+   color: #6e41e2;
    cursor: pointer;
 }
 
@@ -301,6 +308,10 @@
    .product-content {
       flex-direction: column;
       gap: 30px;
+   }
+
+   .product-info {
+      padding: 0;
    }
 
    .wrap-slider__slider-button,

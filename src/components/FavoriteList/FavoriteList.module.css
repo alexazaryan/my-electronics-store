@@ -3,7 +3,7 @@
    top: 0;
    right: -350px;
    width: 350px;
-   background-color: #ffebf0;
+   background-color: white;
    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
    transition: right 0.3s ease-in-out;
    z-index: 1002;
@@ -22,7 +22,7 @@
 .favorite-list__custom-button-close {
    width: 100%;
    padding: 10px;
-   margin: 0 0 20px;
+   margin: 0 0 10px;
    background-color: #6e41e2;
    border-radius: 10px 0 10px 10px;
    font-size: 1.25rem;
@@ -30,11 +30,14 @@
 }
 
 .favorite-list__wrap {
-   flex: 1; /* занимает всё доступное место */
+   flex: 1;
    overflow-y: auto;
-   padding: 20px 0 35px;
-
+   padding: 20px 0 120px;
    height: calc(100dvh - 80px);
+}
+
+.favorite-list__wrap > strong {
+   margin-left: 20px;
 }
 
 .favorite-list__wrap::-webkit-scrollbar {
@@ -47,7 +50,7 @@
 
 .favorite-item__cards {
    padding: 15px 20px;
-   border-bottom: 2px solid white;
+   border-bottom: 1px solid rgb(198, 196, 196);
 }
 
 .favorite-item__card {
@@ -80,7 +83,7 @@
 }
 
 .favorite__delete:hover {
-   transform: scale(1.1); /* легкое увеличение */
+   transform: scale(1.1);
 }
 
 .favorite__icon {
@@ -89,7 +92,6 @@
    cursor: pointer;
    transition: 0.2s;
    border-radius: 5px;
-
    border: 1px solid #6e41e2;
 }
 
@@ -104,20 +106,42 @@
 
 /* низ - цена */
 .favorite-list__total {
-   display: flex;
-   justify-content: space-between;
    left: 0px;
    bottom: 0px;
    width: 100%;
    padding: 20px;
-   border-top: 2px solid white;
-   background-color: #ffebf0;
+   border: 1px solid green;
+   background-color: rgb(216, 251, 216);
    position: absolute;
-   border-radius: 0 0 0 20px;
+   border-radius: 0 0 0 10px;
+}
+
+.favorite-list__total_wrap {
+   display: flex;
+   justify-content: space-between;
 }
 
 .favorite-item__cards:hover {
    cursor: pointer;
    background-color: #f5f5f5;
    transition: background-color 0.2s ease;
+}
+.pay-button {
+   padding: 10px;
+   margin: 10px 0;
+   background-color: #6e41e2;
+   color: #fff;
+   border: none;
+   border-radius: 7px;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
+   font-size: 16px;
+}
+
+.emptyErrorMessage {
+   color: red;
+   font-weight: bold;
+   margin-top: 10px;
+   padding: 20px;
+   font-size: 1rem;
 }

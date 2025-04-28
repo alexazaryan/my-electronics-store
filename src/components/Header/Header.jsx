@@ -5,13 +5,11 @@ import { setSelectedCategory } from "../../store/categoriesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery } from "../../store/searchSlice";
 
-
 import styles from "./Header.module.css";
 
 //dispatch
 const Header = () => {
    const dispatch = useDispatch();
-
 
    // Используем forwardRef
    const [isOverlayVisible, setOverlayVisible] = useState(false);
@@ -34,13 +32,13 @@ const Header = () => {
       <div className={styles["header"]}>
          {/* Привязываем ref */}
          <div className={styles["header__wrap"]}>
+            {/* логотип */}
             <div className={styles["header__left"]}>
                <div
                   className={styles["logo__header"]}
                   onClick={() => {
                      dispatch(setSelectedCategory("Все товары")); // сброс категории
                      dispatch(setSearchQuery("")); // (опционально) сброс поиска
-
                   }}
                >
                   {/* Ссылка на главную страницу Logo*/}
@@ -90,6 +88,7 @@ const Header = () => {
                </div>
             </div>
 
+            {/* поисковик */}
             <div className={styles["header__center"]}>
                <div className={styles["searchContainer"]}>
                   <input

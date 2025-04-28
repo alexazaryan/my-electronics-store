@@ -5,8 +5,8 @@
 }
 
 :root {
-   background-color: rgb(245, 237, 227);
-   --scrollbar-width: 0; /* По умолчанию 0 */
+   background-color: rgb(253, 249, 249);
+   --scrollbar-width: 0;
    box-sizing: border-box;
    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }

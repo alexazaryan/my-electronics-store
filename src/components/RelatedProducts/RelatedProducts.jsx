@@ -51,11 +51,9 @@ const RelatedProducts = ({ currentId, category }) => {
                   />
                </div>
                <p className={styles["related-products__name"]}>{item.name}</p>
-               {/* <ul>
-                  <li>1</li>
-                  <li>2</li>
-                  <li>3</li>
-               </ul> */}
+               <ul>
+                  <li></li>
+               </ul>
                <p className={styles["related-products__price"]}>
                   {item.price.toLocaleString("uk-UA")} ₴
                </p>

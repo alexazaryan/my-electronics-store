@@ -7,9 +7,11 @@ import CsvUpload from "../../components/CsvUpload/CsvUpload";
 import AdminNewsEditor from "../../components/AdminNewsEditor/AdminNewsEditor";
 
 import styles from "./ProductForm.module.css";
+import { useNavigate } from "react-router-dom";
 
 const ProductForm = () => {
    const dispatch = useDispatch();
+   const navigate = useNavigate();
    const fileInputRef = useRef(null);
 
    // начальное сосояние полей
@@ -258,7 +260,21 @@ const ProductForm = () => {
                </CustomButton>
             </form>
 
+            {/* Загрузка файлов типов .CSV */}
             <div className={styles["form__up-load-new"]}>
+               {/* обработке заказов */}
+               <div className={styles["form__orders"]}>
+                  <h4>
+                     <u>Обработка заказов</u>
+                  </h4>
+                  <CustomButton
+                     className={styles["form__go-to-orders"]}
+                     onClick={() => navigate("/admin-orders")} // переход на страницу заказов
+                  >
+                     Перейти к обработке заказов
+                  </CustomButton>
+               </div>
+
                {/* загрузка файлов */}
                <div className={styles["form__up-load"]}>
                   <h4>
@@ -268,7 +284,6 @@ const ProductForm = () => {
                      <CsvUpload />
                   </div>
                </div>
-
                {/* новости */}
                <div className={styles["form__new"]}>
                   <AdminNewsEditor />

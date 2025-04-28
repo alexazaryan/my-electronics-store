@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useMemo, forwardRef } from "react";
+import { useEffect, useMemo, forwardRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
    fetchFavorites,
@@ -7,16 +7,68 @@ import {
    updateFavoriteQuantity,
 } from "../../store/favoriteSlice";
 import CustomButton from "../CustomButton/CustomButton";
-import { toggleFavorites } from "../../store/menuSlice";
+import { toggleFavorites, toggleOrderModal } from "../../store/menuSlice";
 import { BsTrash, BsPlus, BsDash } from "react-icons/bs";
+import OrderModal from "../OrderModal/OrderModal";
+// import { clearFavoritesInFirebase } from "../../utils/clearFavorites"; // импорт очистки
+
+import { saveOrder } from "../../utils/saveOrder";
+
+import { clearFavorites } from "../../store/favoriteSlice";
+import { fetchUserOrders } from "../../store/orderHistorySlice";
+
 import styles from "./FavoriteList.module.css";
+import { clearFavoritesInRealtime } from "../../utils/clearFavorites";
 
 const FavoriteList = forwardRef(({ isVisible }, ref) => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
+   const [emptyError, setEmptyError] = useState(false); // проверка есть ли товар для заказа
+
    const user = useSelector((state) => state.auth.user);
    const products = useSelector((state) => state.products.items);
    const favoriteItems = useSelector((state) => state.favorite.items);
+   const isOrderModalOpen = useSelector((state) => state.menu.isOrderModalOpen); // модельно окно заказов
+
+   //  отправки заказа
+   const handleOrderSubmit = async (formData) => {
+      if (!user || !user.uid) {
+         alert("Вы не авторизованы");
+         return false;
+      }
+
+      const totalPrice = favoriteProducts.reduce(
+         (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
+         0
+      );
+
+      const order = {
+         ...formData,
+         products: favoriteProducts.map((item) => ({
+            id: item.id,
+            name: item.name,
+            image: item.images?.[0] || item.imageUrl?.split(",")[0] || "",
+            quantity: item.quantity || 1,
+            price: item.price || 0,
+         })),
+         total: totalPrice,
+      };
+
+      try {
+         await saveOrder(user.uid, order); // сохраняем заказ
+         // await clearFavoritesInFirebase(user.uid); // ⬅️ удаляем избранное в Firebase
+         await clearFavoritesInRealtime(user.uid);
+
+         console.log("Избранное в Firebase очищено");
+         dispatch(clearFavorites()); // очищаем избранное в Redux
+         dispatch(fetchUserOrders(user.uid)); // загружаем заказы пользователя
+
+         return true;
+      } catch (err) {
+         console.error("Ошибка Firestore:", err);
+         return false;
+      }
+   };
 
    useEffect(() => {
       if (user) {
@@ -82,11 +134,14 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
          >
             ✖ закрыть
          </CustomButton>
-
          <div className={styles["favorite-list__wrap"]}>
             <strong>Избранное</strong>
             {favoriteProducts.length === 0 ? (
-               <p>Список избранного пуст</p>
+               emptyError && (
+                  <p className={styles.emptyErrorMessage}>
+                     Список пуст! Добавьте товары для оформления заказа.
+                  </p>
+               )
             ) : (
                <ul className={styles["favorite-list__card-wrap"]}>
                   {favoriteProducts.map((product) => (
@@ -150,13 +205,37 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
                   ))}
                </ul>
             )}
-
-            {/* оплата */}
-            <div className={styles["favorite-list__total"]}>
-               <strong>К оплате без доставки:</strong>
-               <strong>{total.toLocaleString("uk-UA")} ₴</strong>
+            {/* оплата */}{" "}
+            <div>
+               <div className={styles["favorite-list__total"]}>
+                  <div className={styles["favorite-list__total_wrap"]}>
+                     <strong>К оплате без доставки:</strong>
+                     <strong>{total.toLocaleString("uk-UA")} ₴</strong>
+                  </div>
+                  <CustomButton
+                     className={styles["pay-button"]}
+                     onClick={() => {
+                        if (favoriteProducts.length === 0) {
+                           setEmptyError(true); // Показываем ошибку
+                           return;
+                        }
+                        setEmptyError(false); // Если всё ок, убираем ошибку
+                        dispatch(toggleOrderModal(true));
+                     }}
+                  >
+                     Оформить заказ
+                  </CustomButton>
+               </div>
             </div>
          </div>
+
+         {/* подключение модалки */}
+         <OrderModal
+            isOpen={isOrderModalOpen}
+            onClose={() => dispatch(toggleOrderModal(false))}
+            onSubmit={handleOrderSubmit}
+            user={user}
+         />
       </div>
    );
 });

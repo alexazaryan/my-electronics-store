@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "../../store/favoriteSlice";
 import { togglePanel } from "../../store/sidePanelSlice";
 import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
-import { BsCartDash } from "react-icons/bs";
+import { BsCartDash, BsCartCheck } from "react-icons/bs";
 
 import { setSelectedProduct } from "../../store/productsSlice"; //add prise
 
@@ -183,6 +183,7 @@ const ProductDetails = () => {
                            ))}
                         </div>
                      </div>
+
                      {images.length > 0 && (
                         <BiChevronRight
                            className={styles["arrow-right"]}
@@ -191,7 +192,7 @@ const ProductDetails = () => {
                      )}
                   </div>
 
-                  {/* слайдер */}
+                  {/* слайдер  */}
                   {images.length > 0 && (
                      <div className={styles["image-dots"]}>
                         {images.map((_, index) => (
@@ -213,16 +214,17 @@ const ProductDetails = () => {
                <div className={styles["product__tab-button-group"]}>
                   <div className={styles["description-container"]}>
                      <div
-                        className={`${styles["product-description"]} ${
-                           !isDescriptionExpanded
-                              ? styles["description-collapsed"]
-                              : ""
-                        }`}
+                        className={`
+         ${styles["product-description"]}
+         ${styles["description-collapsed"]}
+         ${isDescriptionExpanded ? styles["expanded"] : ""}
+      `}
                         dangerouslySetInnerHTML={{
                            __html: product.description,
                         }}
                      />
                   </div>
+
                   <CustomButton
                      className={styles["product__tab-button"]}
                      onClick={() =>
@@ -264,10 +266,29 @@ const ProductDetails = () => {
                      <li className={styles["product-price"]}>
                         {product.price.toLocaleString("uk-UA")} ₴
                      </li>
-                     <li className={styles["product-cart-icon"]}>
-                        
-                        {/* добавить в корзину */}
-                        <BsCartDash />
+
+                     {/* добавить в корзину */}
+                     <li
+                        className={styles["product-cart-icon"]}
+                        onClick={(e) => {
+                           e.stopPropagation();
+                           if (!isRegistered) {
+                              dispatch(togglePanel());
+                           } else {
+                              dispatch(toggleFavorite(id));
+                           }
+                        }}
+                     >
+                        {isFavorite ? (
+                           <BsCartCheck
+                              style={{
+                                 stroke: "green",
+                                 strokeWidth: "1px",
+                              }}
+                           />
+                        ) : (
+                           <BsCartDash />
+                        )}
                      </li>
                   </ul>
                   <CustomButton
@@ -283,7 +304,7 @@ const ProductDetails = () => {
                         }
                      }}
                   >
-                     Купить
+                     Оформить заказ
                   </CustomButton>
                </div>
             </div>

@@ -37,33 +37,77 @@
    display: none; /* скрывает полосу прокрутки */
 }
 
-/* анимация  */
-.order-history__animation-blok {
-   position: relative;
+/*  */
+/*  */
+/*  */
+.orderList {
+   list-style: none; /* убрать точки у списка */
+   padding: 0;
+   margin: 0;
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
 }
 
-/* smile */
-.order-history__wrap-loading-smile-img {
-   max-width: 550px;
+.orderItem {
+   background: #ffffff;
+   border-radius: 10px;
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+   overflow: hidden;
 }
 
-.order-history__loading-smile-img {
-   width: 100%;
+.orderSummary {
+   padding: 12px 16px;
+   font-weight: bold;
+   cursor: pointer;
+   transition: background 0.3s;
 }
 
-/* часы */
-.order-history__wrap-hourglass-img {
-   position: absolute;
-   z-index: 1;
-   width: 30px;
-   top: 90px;
-   left: 30px;
-
-   animation: rotateWithPause 1.5s linear infinite;
+.orderSummary:hover {
+   background: #f0f0f0; /* лёгкая подсветка при наведении */
 }
 
-.order-history__hourglass-img {
-   width: 100%;
+.productList {
+   list-style: none;
+   margin: 0;
+   padding: 10px 20px;
+   background: #fafafa; /* фон раскрытого блока */
+}
+
+.productItem {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   margin-bottom: 8px;
+}
+
+.productImage {
+   width: 40px;
+   height: 40px;
+   border-radius: 5px;
+   object-fit: cover;
+}
+
+.orderTopRow {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background: #ffffff;
+   padding: 10px;
+   border-radius: 8px;
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+   cursor: pointer;
+   font-weight: bold;
+   gap: 10px;
+}
+
+.orderAmount {
+   flex: 1;
+}
+
+.arrowIcon {
+   font-size: 20px;
+   color: #333;
 }
 
 @keyframes rotateWithPause {

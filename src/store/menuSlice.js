@@ -9,6 +9,7 @@ const menuSlice = createSlice({
       isCategoryListVisible: false,
       isSettingsVisible: false,
       isOrderHistoryVisible: false,
+      isOrderModalOpen: false, // окно заказа
       isFavoritesVisible: false, // состояние видимости избранного
       selectedCategory: null, // выбор категорий
    },
@@ -41,6 +42,9 @@ const menuSlice = createSlice({
       toggleFavorites: (state, action) => {
          state.isFavoritesVisible = action.payload ?? !state.isFavoritesVisible;
       },
+      toggleOrderModal: (state, action) => {
+         state.isOrderModalOpen = action.payload ?? !state.isOrderModalOpen;
+      },
    },
 });
 
@@ -53,5 +57,6 @@ export const {
    toggleCategoryList,
    toggleSettingsPanel,
    toggleOrderHistory,
+   toggleOrderModal,
 } = menuSlice.actions;
 export default menuSlice.reducer;
