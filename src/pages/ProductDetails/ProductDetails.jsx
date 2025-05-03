@@ -33,7 +33,13 @@ const ProductDetails = () => {
    const [imageIndex, setImageIndex] = useState(0);
    const [transition, setTransition] = useState(true);
 
+   // console.log(product.code);
+
    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false); //open характеристики
+   const hasDiscount = product?.discount > 0;
+   const discountedPrice = hasDiscount
+      ? Math.floor(product.price * (1 - product.discount / 100))
+      : product?.price;
 
    const dispatch = useDispatch();
    const favorites = useSelector((state) => state.favorite.items);
@@ -254,21 +260,33 @@ const ProductDetails = () => {
                   </p>
 
                   <p className={styles["product-code"]}>
-                     <strong>Код товара:</strong>{" "}
+                     <strong>Артикул:</strong>{" "}
                      <span className={styles["product-code__value"]}>
-                        {product.code?.trim() || "---"}
+                        {product?.sku?.trim() || "---"}
                      </span>
                   </p>
                </div>
 
                <div>
-                  <ul className={styles["product-price-box"]}>
-                     <li className={styles["product-price"]}>
-                        {product.price.toLocaleString("uk-UA")} ₴
-                     </li>
+                  <div className={styles["product-price-wrapper"]}>
+                     <div className={styles["product-price-column"]}>
+                        {hasDiscount && (
+                           <div className={styles["product-old-price"]}>
+                              <s>{product.price.toLocaleString("uk-UA")} ₴</s>
+                           </div>
+                        )}
+                        <div
+                           className={
+                              hasDiscount
+                                 ? styles["product-discount-price"]
+                                 : styles["product-price"]
+                           }
+                        >
+                           {discountedPrice.toLocaleString("uk-UA")} ₴
+                        </div>
+                     </div>
 
-                     {/* добавить в корзину */}
-                     <li
+                     <div
                         className={styles["product-cart-icon"]}
                         onClick={(e) => {
                            e.stopPropagation();
@@ -289,8 +307,9 @@ const ProductDetails = () => {
                         ) : (
                            <BsCartDash />
                         )}
-                     </li>
-                  </ul>
+                     </div>
+                  </div>
+
                   <CustomButton
                      className={styles["product-price__buy"]}
                      onClick={() => {

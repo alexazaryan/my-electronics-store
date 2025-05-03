@@ -36,6 +36,7 @@
 
 .editor-button {
    background-color: #2563eb;
+   width: 100%;
    color: white;
    padding: 10px 16px;
    border: none;

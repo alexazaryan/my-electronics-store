@@ -1,0 +1,18 @@
+.metaInfo {
+   margin-top: 4px;
+   font-size: 0.9rem;
+   color: #444;
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: 6px;
+}
+
+.ratingText {
+   font-weight: 500;
+}
+
+.ordersCount {
+   color: #666;
+   font-size: 0.85rem;
+}

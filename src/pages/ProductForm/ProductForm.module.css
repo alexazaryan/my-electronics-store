@@ -26,6 +26,18 @@
    box-sizing: border-box;
 }
 
+.form__admin-products {
+   margin-bottom: 20px;
+   max-width: 500px;
+   width: 100%;
+   height: fit-content;
+   padding: 20px;
+   background-color: antiquewhite;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.2);
+   border-radius: 10px;
+   box-sizing: border-box;
+}
+
 .form__orders {
    margin-bottom: 20px;
    max-width: 500px;
@@ -38,6 +50,7 @@
    box-sizing: border-box;
 }
 
+.form__go-to-editor,
 .form__go-to-orders {
    background-color: #2563eb;
    color: white;

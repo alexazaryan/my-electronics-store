@@ -14,12 +14,11 @@ const ProductForm = () => {
    const navigate = useNavigate();
    const fileInputRef = useRef(null);
 
-   // начальное сосояние полей
    const [productData, setProductData] = useState({
       category: "",
       name: "",
       description: "",
-      code: "",
+      sku: "",
       price: "",
       images: [],
    });
@@ -33,7 +32,7 @@ const ProductForm = () => {
       description: false,
       price: false,
       images: false,
-      code: false,
+      sku: false,
    });
 
    const handleInputChange = (e) => {
@@ -64,18 +63,16 @@ const ProductForm = () => {
       }
    };
 
-   // форма отправки на фаирбуйс данные
    const handleSubmit = async (e) => {
       e.preventDefault();
 
-      // ошибки при заполнеии
       const errors = {
          category: !productData.category.trim(),
          name: !productData.name.trim(),
          description: !productData.description.trim(),
          price: isNaN(productData.price) || productData.price <= 0,
          images: productData.images.length < 2,
-         code: !productData.code.trim(),
+         sku: !productData.sku.trim(),
       };
 
       setFormErrors(errors);
@@ -90,20 +87,23 @@ const ProductForm = () => {
             addProduct({
                ...productData,
                price: Number(productData.price),
+               rating: null,
+               purchase: null,
+               discount: 0,
+               sku: productData.sku,
             })
          );
 
          setSuccess(true);
          alert("Товар добавлен!");
 
-         // очишаем форму
          setProductData({
             category: "",
             name: "",
             description: "",
             price: "",
             images: [],
-            code: "",
+            sku: "",
          });
 
          if (fileInputRef.current) fileInputRef.current.value = "";
@@ -116,14 +116,13 @@ const ProductForm = () => {
    return (
       <>
          <h3 className={styles["product-form__title"]}>Admin room</h3>
+
          <div className={styles["product-form"]}>
-            {/* индивидуальный товар  */}
             <form className={styles["form"]} onSubmit={handleSubmit}>
                <h4>
                   <u>Загрузка индивидуального товара</u>
                </h4>
 
-               {/* Категория */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>Категория:</label>
                   <select
@@ -143,7 +142,6 @@ const ProductForm = () => {
                   </select>
                </div>
 
-               {/* Название */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>
                      Название товара:
@@ -160,7 +158,6 @@ const ProductForm = () => {
                   />
                </div>
 
-               {/* Описание */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>Описание:</label>
                   <textarea
@@ -169,7 +166,6 @@ const ProductForm = () => {
                            ? styles["form__input--error"]
                            : ""
                      }`}
-                     type="text"
                      name="description"
                      placeholder="Описание товара (не более 900 символов)"
                      value={productData.description}
@@ -178,24 +174,22 @@ const ProductForm = () => {
                   />
                </div>
 
-               {/* Код товара / Артикул */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>
                      Код товара / Артикул:
                   </label>
                   <input
                      className={`${styles["form__input"]} ${
-                        formErrors.code ? styles["form__input--error"] : ""
+                        formErrors.sku ? styles["form__input--error"] : ""
                      }`}
                      type="text"
-                     name="code"
+                     name="sku"
                      placeholder="Например: Арт. 1527-091"
-                     value={productData.code}
+                     value={productData.sku}
                      onChange={handleInputChange}
                   />
                </div>
 
-               {/* Цена */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>Цена:</label>
                   <input
@@ -210,7 +204,6 @@ const ProductForm = () => {
                   />
                </div>
 
-               {/* Загрузка изображений */}
                <div className={styles["form__field"]}>
                   <label className={styles["form__label"]}>
                      Загрузите от 2 до 15 изображений:
@@ -229,7 +222,6 @@ const ProductForm = () => {
                   />
                </div>
 
-               {/* Превью изображений */}
                {productData.images.length > 0 && (
                   <div className={styles["form__image-preview-wrap"]}>
                      {productData.images.map((img, i) => (
@@ -244,7 +236,6 @@ const ProductForm = () => {
                   </div>
                )}
 
-               {/* Ошибки / Успех */}
                {error && <p className={styles["form__error"]}>{error}</p>}
                {success && (
                   <p className={styles["form__success"]}>
@@ -260,22 +251,19 @@ const ProductForm = () => {
                </CustomButton>
             </form>
 
-            {/* Загрузка файлов типов .CSV */}
             <div className={styles["form__up-load-new"]}>
-               {/* обработке заказов */}
                <div className={styles["form__orders"]}>
                   <h4>
                      <u>Обработка заказов</u>
                   </h4>
                   <CustomButton
                      className={styles["form__go-to-orders"]}
-                     onClick={() => navigate("/admin-orders")} // переход на страницу заказов
+                     onClick={() => navigate("/admin-orders")}
                   >
                      Перейти к обработке заказов
                   </CustomButton>
                </div>
 
-               {/* загрузка файлов */}
                <div className={styles["form__up-load"]}>
                   <h4>
                      <u>Загрузка файлов типов .CSV</u>
@@ -284,10 +272,25 @@ const ProductForm = () => {
                      <CsvUpload />
                   </div>
                </div>
-               {/* новости */}
+
                <div className={styles["form__new"]}>
                   <AdminNewsEditor />
                </div>
+            </div>
+
+            <div className={styles["form__admin-products"]}>
+               <h4>
+                  <u>
+                     Управление карточеками - удаелние товара, редактор отзывов
+                     установка акций и тд . . .
+                  </u>
+               </h4>
+               <CustomButton
+                  className={styles["form__go-to-editor"]}
+                  onClick={() => navigate("/admin-products")}
+               >
+                  Перейти
+               </CustomButton>
             </div>
          </div>
       </>

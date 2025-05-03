@@ -1,0 +1,201 @@
+.card {
+   display: flex;
+   flex-direction: column;
+   flex: 0 1 calc((100% - (7 * 0.5rem)) / 8);
+   padding: 0.5rem;
+   box-sizing: border-box;
+   border-right: 1px solid rgb(220, 220, 220);
+   border-bottom: 1px solid rgb(220, 220, 220);
+   background-color: white;
+   overflow: hidden;
+   cursor: pointer;
+   min-width: 180px;
+   list-style: none;
+}
+
+.link {
+   text-decoration: none;
+   color: inherit;
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+}
+
+.imgWrap {
+   position: relative;
+   width: 100%;
+   height: 200px;
+   box-sizing: border-box;
+}
+
+.img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
+
+.name {
+   display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   min-height: 2.4em;
+   margin: 0.5rem 0 0.2rem;
+}
+
+.bottomRow {
+   margin-top: auto;
+   display: flex;
+   justify-content: space-between;
+   align-items: end;
+   gap: 0.5rem;
+}
+
+.priceBox {
+   display: flex;
+   flex-direction: column;
+}
+
+.oldPrice {
+   text-decoration: line-through;
+   color: gray;
+   font-size: 14px;
+   position: relative;
+   top: 5px;
+}
+
+.discountPrice {
+   color: red;
+   font-weight: bold;
+   font-size: 16px;
+}
+
+.normalPrice {
+   color: #222;
+   font-weight: bold;
+   font-size: 16px;
+}
+
+.cartIcon {
+   font-size: 20px;
+   color: #6e41e2;
+   cursor: pointer;
+}
+
+.invisible {
+   visibility: hidden;
+   height: 1em;
+}
+
+/* ProductCardMini.module.css */
+.deleteButton {
+   margin-top: 8px;
+   padding: 6px 10px;
+   background-color: red;
+   color: white;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+}
+
+.editableMetaBox {
+   margin-top: 6px;
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+}
+
+.inputRow {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+}
+
+.label {
+   font-size: 13px;
+   color: #444;
+   display: flex;
+   align-items: center;
+   gap: 4px;
+}
+
+.input {
+   width: 60px;
+   padding: 3px 6px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   font-size: 13px;
+}
+.skuRow {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+   margin-top: 4px;
+   font-size: 13px;
+   color: #555;
+}
+
+.skuLabel {
+   font-weight: 500;
+}
+
+.skuValue {
+   background: #f2f2f2;
+   padding: 2px 6px;
+   border-radius: 4px;
+}
+
+.saveIcon {
+   cursor: pointer;
+   color: #666;
+   transition: color 0.2s;
+}
+
+.saveIcon:hover {
+   color: green;
+}
+
+.oldPriceInvisible {
+   visibility: hidden;
+   height: 1em;
+   display: inline-block;
+}
+
+/* адаптив как у больших карточек */
+@media (max-width: 1653px) {
+   .card {
+      flex: 0 1 calc((100% - (6 * 0.5rem)) / 7);
+   }
+}
+@media (max-width: 1447px) {
+   .card {
+      flex: 0 1 calc((100% - (5 * 0.5rem)) / 6);
+   }
+}
+@media (max-width: 1244px) {
+   .card {
+      flex: 0 1 calc((100% - (4 * 0.5rem)) / 5);
+   }
+}
+@media (max-width: 1040px) {
+   .card {
+      flex: 0 1 calc((100% - (3 * 0.5rem)) / 4);
+   }
+}
+@media (max-width: 837px) {
+   .card {
+      flex: 0 1 calc((100% - (2 * 0.5rem)) / 3);
+   }
+}
+@media (max-width: 633px) {
+   .card {
+      flex: 0 1 calc((100% - 0.5rem) / 2);
+   }
+}
+@media (max-width: 429px) {
+   .card {
+      flex: 0 1 calc((100% - 0.5rem) / 2);
+      min-width: auto;
+   }
+}

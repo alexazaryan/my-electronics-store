@@ -5,7 +5,7 @@ import { toggleFavorite } from "../../store/favoriteSlice";
 import CustomButton from "../CustomButton/CustomButton";
 import Spinner from "../Spinner/Spinner";
 import { useNavigate } from "react-router-dom";
-import ConfirmModal from "../ConfirmModal/ConfirmModal";
+// import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { togglePanel } from "../../store/sidePanelSlice";
 import useScrollMemory from "../../hooks/useScrollMemory";
@@ -13,11 +13,10 @@ import ScrollToTopButton from "../ScrollToTopButton/ScrollToTopButton";
 import { BsCartDash, BsCartCheck } from "react-icons/bs";
 
 import styles from "./ProductList.module.css";
+import ProductMetaInfo from "../ProductMetaInfo/ProductMetaInfo";
 
 const ProductList = () => {
    useScrollMemory();
-   const [selectedProduct, setSelectedProduct] = useState(null);
-   const [isModalOpen, setIsModalOpen] = useState(false);
 
    const initialVisibleCount =
       Number(sessionStorage.getItem("visibleCount")) || 36;
@@ -25,12 +24,11 @@ const ProductList = () => {
 
    const searchQuery = useSelector((state) => state.search.query);
    const favorites = useSelector((state) => state.favorite.items);
-   const { isAdmin } = useSelector((state) => state.auth);
    const isRegistered = useSelector((state) => !!state.auth.user);
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const user = useSelector((state) => state.auth.user);
-
+   // product.price
    const {
       items: products,
       status,
@@ -64,23 +62,6 @@ const ProductList = () => {
               );
    }
 
-   // 👇 сохраняем скидки один раз на сессию
-   const discountMapRef = useRef({});
-   products.forEach((p) => {
-      if (!(p.id in discountMapRef.current)) {
-         discountMapRef.current[p.id] = Math.random() < 0.4;
-      }
-   });
-
-   const handleDelete = async (productId, imageUrl) => {
-      try {
-         await dispatch(deleteProduct(productId));
-         console.log(`Изображение для удаления: ${imageUrl}`);
-      } catch (error) {
-         console.error("Ошибка при удалении продукта: ", error);
-      }
-   };
-
    // отслеживаем часто просматриваемые карточки
    const trackProductView = (productId) => {
       const userId = user?.id || "anonymous";
@@ -106,14 +87,6 @@ const ProductList = () => {
 
    return (
       <div className={styles["product-list__box"]}>
-         {isModalOpen && (
-            <ConfirmModal
-               handleDelete={handleDelete}
-               product={selectedProduct}
-               setIsModalOpen={setIsModalOpen}
-            />
-         )}
-
          {status === "loading" ? (
             <div className={styles["preloader"]}>
                <Spinner />
@@ -133,22 +106,25 @@ const ProductList = () => {
                         (fav) => fav.productId === product.id
                      );
 
-                     const name = product.name;
-                     const capitalized =
-                        name.charAt(0).toUpperCase() + name.slice(1);
-
-                     const hasDiscount = discountMapRef.current[product.id];
-                     const fakeOldPrice = Math.floor(product.price * 1.3); // скидки
+                     //
+                     const hasDiscount = product.discount > 0;
+                     const discountedPrice = hasDiscount
+                        ? Math.floor(
+                             product.price * (1 - product.discount / 100)
+                          )
+                        : product.price;
+                     const oldPrice = product.price;
 
                      return (
                         <li
                            key={product.id}
                            className={styles["product-list__card"]}
                            onClick={() => {
-                              trackProductView(product.id); // трекер частопросматриваемых
-                              navigate(`/product/${product.id}`); // переход на товар
+                              trackProductView(product.id);
+                              navigate(`/product/${product.id}`);
                            }}
                         >
+                           {/* Картинка товара */}
                            <div className={styles["product-list__img-wrap"]}>
                               <img
                                  src={
@@ -159,73 +135,59 @@ const ProductList = () => {
                                  alt={product.name}
                                  className={styles["product-list__img"]}
                               />
-                              {/* иконка избранное */}
-                              {/* <div
-                              className={styles["product-list__favorite-icon"]}
-                              onClick={(e) => {
-                                 e.preventDefault();
-                                 e.stopPropagation();
-                                 if (!isRegistered) {
-                                    dispatch(togglePanel());
-                                 } else {
-                                    dispatch(toggleFavorite(product.id));
-                                 }
-                              }}
-                           >
-                              {isFavorite ? (
-                                 <BiSolidHeart
-                                    style={{
-                                       fill: "red",
-                                       stroke: "black",
-                                       strokeWidth: "1px",
-                                    }}
-                                 />
-                              ) : (
-                                 <BiHeart />
-                              )}
-                           </div> */}
                            </div>
 
-                           <div>
+                           <div
+                              style={{
+                                 display: "flex",
+                                 flexDirection: "column",
+                                 flexGrow: 1,
+                              }}
+                           >
+                              {/* рейтинг и кол - заказов описание  */}
                               <ul
                                  className={styles["product-list__wrap-title"]}
                               >
                                  <li className={styles["product-list__name"]}>
-                                    {capitalized}
+                                    {product.name}
                                  </li>
 
-                                 <li
-                                    className={
-                                       styles["product-list__description"]
-                                    }
-                                 ></li>
+                                 <ProductMetaInfo
+                                    rating={product.rating}
+                                    ordersCount={product.ordersCount}
+                                 />
+                              </ul>
 
-                                 {/* скидки */}
-                                 <li
-                                    className={
-                                       hasDiscount
-                                          ? styles["old-price"]
-                                          : styles["invisible"]
-                                    }
-                                 >
-                                    {fakeOldPrice.toLocaleString("uk-UA")} ₴
-                                 </li>
-
-                                 <li className={styles["product-action-row"]}>
+                              {/* ⬇⬇⬇ ПРИЖАТЫЙ ВНИЗ БЛОК */}
+                              <div style={{ marginTop: "auto" }}>
+                                 <div className={styles["product-action-row"]}>
                                     <div className={styles["price-block"]}>
-                                       <span
-                                          className={
-                                             hasDiscount
-                                                ? styles["discount-price"]
-                                                : styles["normal-price"]
-                                          }
-                                       >
-                                          {product.price.toLocaleString(
-                                             "uk-UA"
-                                          )}{" "}
-                                          ₴
-                                       </span>
+                                       <div>
+                                          {hasDiscount && (
+                                             <div
+                                                className={styles["old-price"]}
+                                             >
+                                                {oldPrice.toLocaleString(
+                                                   "uk-UA"
+                                                )}{" "}
+                                                ₴
+                                             </div>
+                                          )}
+                                          <span
+                                             className={
+                                                hasDiscount
+                                                   ? styles["discount-price"]
+                                                   : styles["normal-price"]
+                                             }
+                                          >
+                                             {discountedPrice.toLocaleString(
+                                                "uk-UA"
+                                             )}{" "}
+                                             ₴
+                                          </span>
+                                       </div>
 
+                                       {/* карзина */}
                                        <span
                                           className={
                                              styles["product-list-icon"]
@@ -255,25 +217,15 @@ const ProductList = () => {
                                           )}
                                        </span>
                                     </div>
-                                 </li>
-
-                                 <li
-                                    style={{ color: "red" }}
-                                    className={
-                                       !isAdmin ? styles["hidden-for-user"] : ""
-                                    }
-                                 >
-                                    Дроп&nbsp;
-                                    {product.purchase?.toLocaleString(
-                                       "uk-UA"
-                                    ) || "—"}
-                                    &nbsp;₴
-                                 </li>
-                              </ul>
+                                 </div>
+                              </div>
                            </div>
 
-                           <div className={styles["product-ist__wrap-button"]}>
-                              {isAdmin && (
+                           {/* Кнопка delete */}
+                           {/* {isAdmin && (
+                              <div
+                                 className={styles["product-ist__wrap-button"]}
+                              >
                                  <button
                                     className={
                                        styles["product-ist__delete-button"]
@@ -286,8 +238,8 @@ const ProductList = () => {
                                  >
                                     delete
                                  </button>
-                              )}
-                           </div>
+                              </div>
+                           )} */}
                         </li>
                      );
                   })}

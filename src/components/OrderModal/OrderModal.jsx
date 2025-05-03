@@ -38,21 +38,6 @@ const OrderModal = ({ isOpen, onClose, onSubmit, user }) => {
       }
    }, [isOpen]);
 
-   // закрытие при клике вне модалки
-   useEffect(() => {
-      const handleClickOutside = (event) => {
-         if (modalRef.current && !modalRef.current.contains(event.target)) {
-            onClose(); // закрыть модалку
-         }
-      };
-      if (isOpen) {
-         document.addEventListener("mousedown", handleClickOutside);
-      }
-      return () => {
-         document.removeEventListener("mousedown", handleClickOutside);
-      };
-   }, [isOpen, onClose]);
-
    // отправка формы
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -68,7 +53,6 @@ const OrderModal = ({ isOpen, onClose, onSubmit, user }) => {
 
       setErrors(newErrors); // записываем ошибки
 
-      // автофокус на первое поле с ошибкой
       if (Object.keys(newErrors).length > 0) {
          if (newErrors.name) nameRef.current.focus();
          else if (newErrors.phone) phoneRef.current.focus();
@@ -100,134 +84,137 @@ const OrderModal = ({ isOpen, onClose, onSubmit, user }) => {
       }
    };
 
+   if (!isOpen) return null; // если модалка закрыта, ничего не рендерим
+
    return (
-      <div
-         className={`${styles["order-modal"]} ${
-            isOpen ? styles["visible"] : ""
-         }`}
-      >
-         <CustomButton
-            className={styles["favorite-list__custom-button-close"]}
-            onClick={onClose}
+      <div className={styles.overlay} onClick={onClose}>
+         {" "}
+         {/* фон */}
+         <div
+            className={`${styles["order-modal"]} ${styles["visible"]}`}
+            onClick={(e) => e.stopPropagation()} // остановить клик внутри
+            ref={modalRef}
          >
-            ✖ закрыть
-         </CustomButton>
+            <CustomButton
+               className={styles["favorite-list__custom-button-close"]}
+               onClick={onClose}
+            >
+               ✖ закрыть
+            </CustomButton>
 
-         <div className={styles["order-modal__wrap"]} ref={modalRef}>
-            {isSubmitted ? ( // если заказ отправлен
-               <div className={styles["success-message"]}>
-                  <h3>Заказ отправлен!</h3>
-                  <p>
-                     Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время.
-                  </p>
-               </div>
-            ) : (
-               // если ещё не отправлен
-               <>
-                  <h3>Оформление заказа</h3>
-                  <form onSubmit={handleSubmit} className={styles.form}>
-                     {/* Имя */}
-                     <input
-                        ref={nameRef}
-                        type="text"
-                        placeholder="Ваше имя"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className={errors.name ? styles.error : ""}
-                     />
-                     {errors.name && (
-                        <p className={styles["error-message"]}>{errors.name}</p>
-                     )}
+            <div className={styles["order-modal__wrap"]}>
+               {isSubmitted ? (
+                  <div className={styles["success-message"]}>
+                     <h3>Заказ отправлен!</h3>
+                     <p>
+                        Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее
+                        время.
+                     </p>
+                  </div>
+               ) : (
+                  <>
+                     <h3>Оформление заказа</h3>
+                     <form onSubmit={handleSubmit} className={styles.form}>
+                        <input
+                           ref={nameRef}
+                           type="text"
+                           placeholder="Ваше имя"
+                           value={name}
+                           onChange={(e) => setName(e.target.value)}
+                           className={errors.name ? styles.error : ""}
+                        />
+                        {errors.name && (
+                           <p className={styles["error-message"]}>
+                              {errors.name}
+                           </p>
+                        )}
 
-                     {/* Телефон */}
-                     <input
-                        ref={phoneRef}
-                        type="tel"
-                        placeholder="Телефон"
-                        value={phone}
-                        onChange={(e) => {
-                           let value = e.target.value;
-                           if (!value.startsWith("+380")) value = "+380";
-                           const digits = value.replace(/\D/g, "").slice(3);
-                           const limitedDigits = digits.slice(0, 9);
-                           setPhone("+380" + limitedDigits);
-                        }}
-                        className={errors.phone ? styles.error : ""}
-                     />
-                     {errors.phone && (
-                        <p className={styles["error-message"]}>
-                           {errors.phone}
-                        </p>
-                     )}
+                        <input
+                           ref={phoneRef}
+                           type="tel"
+                           placeholder="Телефон"
+                           value={phone}
+                           onChange={(e) => {
+                              let value = e.target.value;
+                              if (!value.startsWith("+380")) value = "+380";
+                              const digits = value.replace(/\D/g, "").slice(3);
+                              const limitedDigits = digits.slice(0, 9);
+                              setPhone("+380" + limitedDigits);
+                           }}
+                           className={errors.phone ? styles.error : ""}
+                        />
+                        {errors.phone && (
+                           <p className={styles["error-message"]}>
+                              {errors.phone}
+                           </p>
+                        )}
 
-                     {/* Email */}
-                     <input
-                        ref={emailRef}
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className={errors.email ? styles.error : ""}
-                     />
-                     {errors.email && (
-                        <p className={styles["error-message"]}>
-                           {errors.email}
-                        </p>
-                     )}
+                        <input
+                           ref={emailRef}
+                           type="email"
+                           placeholder="Email"
+                           value={email}
+                           onChange={(e) => setEmail(e.target.value)}
+                           className={errors.email ? styles.error : ""}
+                        />
+                        {errors.email && (
+                           <p className={styles["error-message"]}>
+                              {errors.email}
+                           </p>
+                        )}
 
-                     {/* Город */}
-                     <input
-                        ref={cityRef}
-                        type="text"
-                        placeholder="Город"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        className={errors.city ? styles.error : ""}
-                     />
-                     {errors.city && (
-                        <p className={styles["error-message"]}>{errors.city}</p>
-                     )}
+                        <input
+                           ref={cityRef}
+                           type="text"
+                           placeholder="Город"
+                           value={city}
+                           onChange={(e) => setCity(e.target.value)}
+                           className={errors.city ? styles.error : ""}
+                        />
+                        {errors.city && (
+                           <p className={styles["error-message"]}>
+                              {errors.city}
+                           </p>
+                        )}
 
-                     {/* Способ доставки */}
-                     <select
-                        ref={deliveryMethodRef}
-                        value={deliveryMethod}
-                        onChange={(e) => setDeliveryMethod(e.target.value)}
-                        className={errors.deliveryMethod ? styles.error : ""}
-                     >
-                        <option value="">Выберите способ доставки</option>
-                        <option value="Курьер">Курьер</option>
-                        <option value="Самовывоз">Самовывоз</option>
-                        <option value="Почта">Почта</option>
-                     </select>
-                     {errors.deliveryMethod && (
-                        <p className={styles["error-message"]}>
-                           {errors.deliveryMethod}
-                        </p>
-                     )}
-
-                     {/* Комментарий */}
-                     <textarea
-                        className={styles.textarea}
-                        placeholder="Оставить комментарий"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        rows={4}
-                        maxLength={50}
-                     />
-
-                     {/* Кнопка отправить */}
-                     <div className={styles["order-modal__bottom"]}>
-                        <button
-                           className={styles["button-send-order"]}
-                           type="submit"
+                        <select
+                           ref={deliveryMethodRef}
+                           value={deliveryMethod}
+                           onChange={(e) => setDeliveryMethod(e.target.value)}
+                           className={errors.deliveryMethod ? styles.error : ""}
                         >
-                           Отправить заказ
-                        </button>
-                     </div>
-                  </form>
-               </>
-            )}
+                           <option value="">Выберите способ доставки</option>
+                           <option value="Курьер">Курьер</option>
+                           <option value="Самовывоз">Самовывоз</option>
+                           <option value="Почта">Почта</option>
+                        </select>
+                        {errors.deliveryMethod && (
+                           <p className={styles["error-message"]}>
+                              {errors.deliveryMethod}
+                           </p>
+                        )}
+
+                        <textarea
+                           className={styles.textarea}
+                           placeholder="Оставить комментарий"
+                           value={comment}
+                           onChange={(e) => setComment(e.target.value)}
+                           rows={4}
+                           maxLength={50}
+                        />
+
+                        <div className={styles["order-modal__bottom"]}>
+                           <button
+                              className={styles["button-send-order"]}
+                              type="submit"
+                           >
+                              Отправить заказ
+                           </button>
+                        </div>
+                     </form>
+                  </>
+               )}
+            </div>
          </div>
       </div>
    );

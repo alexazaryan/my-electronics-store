@@ -14,6 +14,18 @@
    flex-direction: column;
 }
 
+.overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+
+   display: flex;
+   justify-content: flex-end; /* модалка прижата вправо */
+   z-index: 1000; /* фон под модалкой */
+}
+
 .visible {
    right: 0;
 }

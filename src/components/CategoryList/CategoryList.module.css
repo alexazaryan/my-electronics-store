@@ -31,7 +31,8 @@
 
 .category-button {
    width: 80%;
-   background-color: white;
+   background-color: rgb(207, 207, 207);
+   color: black;
    border: 1px solid #ccc;
    padding: 10px;
    cursor: pointer;
@@ -51,7 +52,6 @@
    color: white;
    border: none;
 }
-
 .close-button {
    width: 100%;
    padding: 10px;

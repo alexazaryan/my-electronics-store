@@ -4,17 +4,20 @@ const authSlice = createSlice({
    name: "auth",
    initialState: {
       user: null,
-      isAdmin: false, // флаг администратора
+      isAdmin: false,
+      isLoading: true, // загрузка по умолчанию
    },
    reducers: {
       setUser: (state, action) => {
          const { user, role } = action.payload;
-         state.user = user; // Присваиваем user напрямую
+         state.user = user;
          state.isAdmin = role === "admin";
+         state.isLoading = false; // ← обязательно
       },
       clearUser: (state) => {
          state.user = null;
          state.isAdmin = false;
+         state.isLoading = false; // ← обязательно
       },
    },
 });

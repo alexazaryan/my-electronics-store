@@ -1,10 +1,12 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setSelectedCategory } from "../../store/categoriesSlice";
+import { BsChevronRight } from "react-icons/bs";
+
 import ProductCircleSlider from "../../components/ProductCircleSlider/ProductCircleSlider";
 import ProductList from "../../components/ProductList/ProductList";
 import TrustSlider from "../../components/TrustSlider/TrustSlider";
 import CustomButton from "../../components/CustomButton/CustomButton";
-import { setSelectedCategory } from "../../store/categoriesSlice";
-import { BsChevronRight } from "react-icons/bs";
 
 import styles from "./Home.module.css";
 
@@ -16,20 +18,31 @@ export default function Home() {
       (state) => state.categories
    );
 
+   useEffect(() => {
+      let isMounted = true; // флаг для избежания утечек памяти
+
+      return () => {
+         isMounted = false;
+      };
+   }, [categories]);
+
    return (
       <div>
          {status === "succeeded" && (
             <div>
                <div className={styles["box-categories-slider-entry"]}>
-                  {/* категории выбора на главной странице */}
                   <ul className={styles["box-entry-block__categories"]}>
-                     {categories.slice(0, 7).map((cat) => (
+                     {categories.slice(0, 7).map((cat, index) => (
                         <li
-                           key={cat}
+                           key={categories[index]}
                            className={`${styles["category-item"]} ${
-                              selectedCategory === cat ? styles["active"] : ""
+                              selectedCategory === categories[index]
+                                 ? styles["active"]
+                                 : ""
                            }`}
-                           onClick={() => dispatch(setSelectedCategory(cat))}
+                           onClick={() =>
+                              dispatch(setSelectedCategory(categories[index]))
+                           }
                         >
                            <span className={styles["category-name"]}>
                               {cat}
@@ -41,14 +54,12 @@ export default function Home() {
                      ))}
                   </ul>
 
-                  {/* slider center */}
                   <div className={styles["box-entry-block__slider"]}>
                      <TrustSlider />
                   </div>
 
-                  {/* в разработке */}
                   <div className={styles["box-entry-block__sign"]}>
-                     <h3>Хотите продавать вместе с нами? </h3>
+                     <h3>Хотите продавать вместе с нами?</h3>
                      <CustomButton className={styles["sign"]}>
                         Скоро запуск
                         <span style={{ color: "yellow", marginLeft: "10px" }}>
@@ -61,6 +72,7 @@ export default function Home() {
                <ProductCircleSlider />
             </div>
          )}
+
          <ProductList />
       </div>
    );

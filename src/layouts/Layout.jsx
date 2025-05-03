@@ -7,13 +7,14 @@ import SidePanel from "../components/SidePanel/SidePanel";
 import HeaderNavigationBlock from "../components/Header/HeaderNavigationBlock";
 import StickyTopBanner from "../components/StickyTopBanner/StickyTopBanner";
 import StickyBuyButton from "../components/StickyBuyButton/StickyBuyButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useLocation } from "react-router-dom";
 
 import styles from "./Layout.module.css";
 
 const Layout = () => {
+   // категории
    const isFavoritesVisible = useSelector(
       (state) => state.menu.isFavoritesVisible
    );

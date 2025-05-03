@@ -1,0 +1,57 @@
+/* components/AdminDiscountSetter/AdminDiscountSetter.module.css */
+
+.wrapper {
+   max-width: 500px;
+   margin: 20px auto;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 10px;
+   background-color: #f9f9f9;
+}
+
+h3 {
+   margin-bottom: 15px;
+   font-size: 1.2rem;
+   text-align: center;
+}
+
+.row {
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   margin-bottom: 15px;
+}
+
+label {
+   font-weight: 500;
+}
+
+input,
+select {
+   padding: 8px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 1rem;
+}
+
+button {
+   padding: 10px;
+   width: 100%;
+   background-color: #007bff;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   font-size: 1rem;
+   cursor: pointer;
+}
+
+button:disabled {
+   background-color: #aaa;
+   cursor: not-allowed;
+}
+
+.success {
+   color: green;
+   margin-top: 10px;
+   text-align: center;
+}

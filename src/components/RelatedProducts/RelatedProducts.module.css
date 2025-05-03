@@ -54,6 +54,23 @@
    font-size: 16px;
 }
 
+.loadMoreButton {
+   padding: 12px;
+   background-color: #6e41e2;
+   color: #fff;
+   border: none;
+   border-radius: 7px;
+   cursor: pointer;
+   transition: background-color 0.2s ease;
+   font-size: 16px;
+   margin: 1rem auto;
+   display: block;
+}
+
+.loadMoreButton:hover {
+   background-color: #5935c6;
+}
+
 /* Адаптив как в ProductList */
 @media (max-width: 1653px) {
    .related-products__card {

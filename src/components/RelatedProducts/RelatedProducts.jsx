@@ -1,64 +1,47 @@
-// Компонент показывает 16 похожих + 8 случайных товаров при смене товара
-
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import ProductCardMini from "../ProductCardMini/ProductCardMini";
+import CustomButton from "../CustomButton/CustomButton";
 import styles from "./RelatedProducts.module.css";
 
 const RelatedProducts = ({ currentId, category }) => {
-   const products = useSelector((state) => state.products.items); // список всех товаров
-   const [combined, setCombined] = useState([]); // итоговые товары
+   const products = useSelector((state) => state.products.items);
+   const [available, setAvailable] = useState([]); // доступные
+   const [shown, setShown] = useState([]); // отображённые
 
+   // Первый запуск: фильтруем и перемешиваем
    useEffect(() => {
-      window.scrollTo({ top: 0, behavior: "auto" }); // скролл наверх при смене товара
+      const filtered = products.filter((p) => p.id !== currentId);
+      const shuffled = [...filtered].sort(() => 0.5 - Math.random());
+      setAvailable(shuffled);
+      setShown(shuffled.slice(0, 15));
+   }, [products, currentId]);
 
-      // 16 из той же категории, но не текущий товар
-      const related = products
-         .filter((p) => p.category === category && p.id !== currentId)
-         .slice(0, 16);
+   // Кнопка "Показать ещё"
+   const handleLoadMore = () => {
+      const remaining = available.slice(shown.length);
+      const nextBatch = remaining.slice(0, 15);
+      setShown((prev) => [...prev, ...nextBatch]);
+   };
 
-      // 8 случайных, не входящих в related
-      const extras = products.filter(
-         (p) => p.id !== currentId && !related.some((r) => r.id === p.id)
-      );
-      const shuffledExtras = [...extras]
-         .sort(() => 0.5 - Math.random())
-         .slice(0, 8);
-
-      // объединяем и перемешиваем
-      const final = [...related, ...shuffledExtras].sort(
-         () => 0.5 - Math.random()
-      );
-
-      setCombined(final); // сохраняем итог
-   }, [currentId, category, products]); // обновлять при смене товара или категории
-
-   if (combined.length === 0) return null; // если нечего показывать — ничего не рендерим
+   if (shown.length === 0) return null;
 
    return (
-      <div className={styles["related-products__grid"]}>
-         {combined.map((item) => (
-            <Link
-               key={item.id}
-               to={`/product/${item.id}`}
-               className={styles["related-products__card"]}
+      <div>
+         <div className={styles["related-products__grid"]}>
+            {shown.map((item) => (
+               <ProductCardMini key={item.id} item={item} />
+            ))}
+         </div>
+
+         {shown.length < available.length && (
+            <CustomButton
+               onClick={handleLoadMore}
+               className={styles.loadMoreButton}
             >
-               <div className={styles["related-products__img-wrap"]}>
-                  <img
-                     src={item.images?.[0] || item.imageUrl}
-                     alt={item.name}
-                     className={styles["related-products__img"]}
-                  />
-               </div>
-               <p className={styles["related-products__name"]}>{item.name}</p>
-               <ul>
-                  <li></li>
-               </ul>
-               <p className={styles["related-products__price"]}>
-                  {item.price.toLocaleString("uk-UA")} ₴
-               </p>
-            </Link>
-         ))}
+               Показать еще
+            </CustomButton>
+         )}
       </div>
    );
 };

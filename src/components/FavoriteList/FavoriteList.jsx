@@ -59,7 +59,6 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
          // await clearFavoritesInFirebase(user.uid); // ⬅️ удаляем избранное в Firebase
          await clearFavoritesInRealtime(user.uid);
 
-         console.log("Избранное в Firebase очищено");
          dispatch(clearFavorites()); // очищаем избранное в Redux
          dispatch(fetchUserOrders(user.uid)); // загружаем заказы пользователя
 
@@ -92,7 +91,18 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
       return favoriteItems
          .map((fav) => {
             const product = products.find((p) => p.id === fav.productId);
-            return product ? { ...product, quantity: fav.quantity } : null;
+            if (!product) return null;
+
+            const hasDiscount = product.discount > 0;
+            const discountedPrice = hasDiscount
+               ? Math.floor(product.price * (1 - product.discount / 100))
+               : product.price;
+
+            return {
+               ...product,
+               quantity: fav.quantity,
+               price: discountedPrice, // ✅ используем цену со скидкой
+            };
          })
          .filter(Boolean);
    }, [products, favoriteItems]);
@@ -120,7 +130,7 @@ const FavoriteList = forwardRef(({ isVisible }, ref) => {
       (sum, p) => sum + (p.price || 0) * (p.quantity || 1),
       0
    );
-
+   // return product ?
    return (
       <div
          ref={ref}

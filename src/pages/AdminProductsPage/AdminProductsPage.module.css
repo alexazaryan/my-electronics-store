@@ -1,0 +1,21 @@
+/* AdminProductsPage.module.css */
+.adminPage {
+   padding: 20px;
+}
+
+.cardList {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 20px;
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}
+
+.discountBlock {
+   margin-top: 40px;
+   padding: 20px;
+   background-color: #f7f7f7;
+   border: 1px solid #ddd;
+   border-radius: 10px;
+}
