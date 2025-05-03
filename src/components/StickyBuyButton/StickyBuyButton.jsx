@@ -40,8 +40,13 @@ const StickyBuyButton = () => {
          }`}
       >
          <span className={styles.price}>
-            {product.price.toLocaleString("uk-UA")} ₴
+            {(product.discount > 0
+               ? Math.floor(product.price * (1 - product.discount / 100))
+               : product.price
+            ).toLocaleString("uk-UA")}{" "}
+            ₴
          </span>
+
          <CustomButton className={styles.button} onClick={handleClick}>
             Купить
          </CustomButton>
