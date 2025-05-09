@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery } from "../../store/searchSlice";
 
 import styles from "./Header.module.css";
+import SofyxLogo from "../SofyxLogo/SofyxLogo";
 
 //dispatch
 const Header = () => {
@@ -43,47 +44,7 @@ const Header = () => {
                >
                   {/* Ссылка на главную страницу Logo*/}
                   <Link to="/">
-                     <svg width="100" height="50" viewBox="0 -10 150 100">
-                        <text
-                           x="10"
-                           y="50"
-                           fontSize="30"
-                           fontFamily="Arial"
-                           fill="black"
-                           fontWeight="bold"
-                        >
-                           S
-                        </text>
-                        <text
-                           x="140"
-                           y="50"
-                           fontSize="30"
-                           fontFamily="Arial"
-                           fill="black"
-                           fontWeight="bold"
-                        >
-                           H
-                        </text>
-                        <text
-                           x="35"
-                           y="70"
-                           fontSize="90"
-                           fontFamily="Arial"
-                           fill="#6e41e2"
-                        >
-                           O
-                        </text>
-                        <text
-                           x="110"
-                           y="50"
-                           fontSize="30"
-                           fontFamily="Arial"
-                           fill="black"
-                           fontWeight="bold"
-                        >
-                           P
-                        </text>
-                     </svg>
+                     <SofyxLogo />
                   </Link>
                </div>
             </div>

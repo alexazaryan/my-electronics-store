@@ -5,7 +5,7 @@ import { toggleFavorite } from "../../store/favoriteSlice";
 import CustomButton from "../CustomButton/CustomButton";
 import Spinner from "../Spinner/Spinner";
 import { useNavigate } from "react-router-dom";
-// import ConfirmModal from "../ConfirmModal/ConfirmModal";
+
 import { BiHeart, BiSolidHeart } from "react-icons/bi";
 import { togglePanel } from "../../store/sidePanelSlice";
 import useScrollMemory from "../../hooks/useScrollMemory";
@@ -14,6 +14,7 @@ import { BsCartDash, BsCartCheck } from "react-icons/bs";
 
 import styles from "./ProductList.module.css";
 import ProductMetaInfo from "../ProductMetaInfo/ProductMetaInfo";
+import ProductPrice from "../FinalPrice/ProductPrice";
 
 const ProductList = () => {
    useScrollMemory();
@@ -28,7 +29,7 @@ const ProductList = () => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const user = useSelector((state) => state.auth.user);
-   // product.price
+
    const {
       items: products,
       status,
@@ -106,20 +107,12 @@ const ProductList = () => {
                         (fav) => fav.productId === product.id
                      );
 
-                     //
-                     const hasDiscount = product.discount > 0;
-                     const discountedPrice = hasDiscount
-                        ? Math.floor(
-                             product.price * (1 - product.discount / 100)
-                          )
-                        : product.price;
-                     const oldPrice = product.price;
-
                      return (
                         <li
                            key={product.id}
                            className={styles["product-list__card"]}
                            onClick={() => {
+                              // window.scrollTo(0, 0);
                               trackProductView(product.id);
                               navigate(`/product/${product.id}`);
                            }}
@@ -158,36 +151,14 @@ const ProductList = () => {
                                  />
                               </ul>
 
-                              {/* ⬇⬇⬇ ПРИЖАТЫЙ ВНИЗ БЛОК */}
+                              {/* ⬇⬇⬇ ПРИЖАТЫЙ ВНИЗ БЛОК  - скидка цена корзина*/}
                               <div style={{ marginTop: "auto" }}>
                                  <div className={styles["product-action-row"]}>
                                     <div className={styles["price-block"]}>
-                                       <div>
-                                          {hasDiscount && (
-                                             <div
-                                                className={styles["old-price"]}
-                                             >
-                                                {oldPrice.toLocaleString(
-                                                   "uk-UA"
-                                                )}{" "}
-                                                ₴
-                                             </div>
-                                          )}
-                                          <span
-                                             className={
-                                                hasDiscount
-                                                   ? styles["discount-price"]
-                                                   : styles["normal-price"]
-                                             }
-                                          >
-                                             {discountedPrice.toLocaleString(
-                                                "uk-UA"
-                                             )}{" "}
-                                             ₴
-                                          </span>
-                                       </div>
+                                       {/* цена и скидка */}
+                                       <ProductPrice product={product} />
 
-                                       {/* карзина */}
+                                       {/* корзина */}
                                        <span
                                           className={
                                              styles["product-list-icon"]
@@ -220,26 +191,6 @@ const ProductList = () => {
                                  </div>
                               </div>
                            </div>
-
-                           {/* Кнопка delete */}
-                           {/* {isAdmin && (
-                              <div
-                                 className={styles["product-ist__wrap-button"]}
-                              >
-                                 <button
-                                    className={
-                                       styles["product-ist__delete-button"]
-                                    }
-                                    onClick={(e) => {
-                                       e.stopPropagation();
-                                       setIsModalOpen(true);
-                                       setSelectedProduct(product);
-                                    }}
-                                 >
-                                    delete
-                                 </button>
-                              </div>
-                           )} */}
                         </li>
                      );
                   })}

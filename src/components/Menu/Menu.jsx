@@ -161,7 +161,10 @@ const Menu = () => {
                {isAdmin && (
                   <div
                      className={styles["admin-panel"]}
-                     onClick={() => navigate("/product-form")}
+                     onClick={() => {
+                        navigate("/product-form");
+                        dispatch(closeMenu());
+                     }}
                   >
                      <BsTencentQq className={styles["admin-icon"]} />
                      <div>

@@ -4,6 +4,7 @@ import { toggleFavorites } from "../../store/menuSlice";
 import { toggleFavorite } from "../../store/favoriteSlice";
 
 import styles from "./StickyBuyButton.module.css";
+import FinalPrice from "../FinalPrice/FinalPrice";
 
 const StickyBuyButton = () => {
    const product = useSelector((state) => state.products.selectedProduct);
@@ -39,13 +40,9 @@ const StickyBuyButton = () => {
             isFavoritesVisible ? styles.hidden : styles.visible
          }`}
       >
-         <span className={styles.price}>
-            {(product.discount > 0
-               ? Math.floor(product.price * (1 - product.discount / 100))
-               : product.price
-            ).toLocaleString("uk-UA")}{" "}
-            ₴
-         </span>
+         {/* <span className={styles.price}> */}
+         <FinalPrice />
+         {/* </span> */}
 
          <CustomButton className={styles.button} onClick={handleClick}>
             Купить

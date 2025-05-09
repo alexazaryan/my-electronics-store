@@ -15,15 +15,15 @@
    height: 64px; /* Фиксированная высота */
 }
 
-.price {
+/* .price {
    font-size: 18px;
    font-weight: bold;
    color: #333;
    white-space: nowrap;
    margin: 0;
    padding: 0;
-   line-height: 1; /* Убираем лишнее пространство */
-}
+   line-height: 1;
+} */
 
 .button {
    background-color: #28a745;

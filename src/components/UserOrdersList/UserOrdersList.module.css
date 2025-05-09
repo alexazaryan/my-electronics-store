@@ -86,7 +86,8 @@
 .checkButton,
 .restoreButton,
 .deleteButton {
-   padding: 8px 14px;
+   padding: 10px;
+   margin: 5px 0;
    border: none;
    border-radius: 6px;
    font-size: 14px;
@@ -244,3 +245,5 @@
       align-self: flex-end;
    }
 }
+
+/* мой */

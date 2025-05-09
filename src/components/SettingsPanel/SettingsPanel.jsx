@@ -26,13 +26,7 @@ const SettingsPanel = forwardRef(({ isVisible }, ref) => {
             ✖ закрыть
          </CustomButton>
          <div className={styles["settings-panel__wrap"]}>
-            <p>Настройки</p>
-            <p>Настройки</p>
-            <p>Настройки</p>
-            <p>Настройки</p>
-            <p>Настройки</p>
-            <p>Настройки</p>
-            <p>Настройки</p>
+            <h3>Функция появится позже</h3>
          </div>
       </div>
    );

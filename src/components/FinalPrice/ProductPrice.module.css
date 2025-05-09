@@ -1,0 +1,26 @@
+.price-block {
+   display: flex;
+   flex-direction: column;
+   gap: 8px; /* расстояние между ценами */
+}
+
+.old-price {
+   position: relative;
+   top: 10px;
+   left: 0;
+   font-size: 0.8rem;
+   color: #888; /* серый */
+   text-decoration: line-through; /* зачёркнуто */
+}
+
+.discount-price {
+   font-size: 1rem;
+   color: #f62f2f; /* красный — скидка */
+   font-weight: bold;
+}
+
+.normal-price {
+   font-size: 1rem;
+   color: #222222;
+   font-weight: 500;
+}

@@ -1,10 +1,12 @@
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../../store/productsSlice";
 import { uploadImageToImgBB } from "../../utils/uploadImage";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CsvUpload from "../../components/CsvUpload/CsvUpload";
 import AdminNewsEditor from "../../components/AdminNewsEditor/AdminNewsEditor";
+
+import { collection, doc, getDoc, setDoc } from "firebase/firestore"; // ✅
+import { db } from "../../utils/firebase"; // не забудь импорт
 
 import styles from "./ProductForm.module.css";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +16,7 @@ const ProductForm = () => {
    const navigate = useNavigate();
    const fileInputRef = useRef(null);
 
+   const newDocRef = doc(collection(db, "products")); // 🔧 создаём ссылку с новым ID
    const [productData, setProductData] = useState({
       category: "",
       name: "",
@@ -64,15 +67,13 @@ const ProductForm = () => {
    };
 
    const handleSubmit = async (e) => {
-      e.preventDefault();
-
       const errors = {
-         category: !productData.category.trim(),
-         name: !productData.name.trim(),
-         description: !productData.description.trim(),
-         price: isNaN(productData.price) || productData.price <= 0,
-         images: productData.images.length < 2,
-         sku: !productData.sku.trim(),
+         category: !productData.category.trim(), // ошибка если пустая категория
+         name: !productData.name.trim(), // ошибка если пустое имя
+         description: !productData.description.trim(), // ошибка если пустое описание
+         price: isNaN(productData.price) || productData.price <= 0, // ошибка если цена не число или <= 0
+         images: productData.images.length < 2, // ошибка если меньше 2 изображений
+         sku: !productData.sku.trim(), // ошибка если пустой sku
       };
 
       setFormErrors(errors);
@@ -83,16 +84,30 @@ const ProductForm = () => {
       }
 
       try {
-         await dispatch(
-            addProduct({
-               ...productData,
-               price: Number(productData.price),
-               rating: null,
-               purchase: null,
-               discount: 0,
-               sku: productData.sku,
-            })
-         );
+         const docRef = doc(db, "products", productData.sku); // создаём ссылку с ID = sku
+         const existing = await getDoc(docRef); // проверяем, существует ли товар
+
+         if (existing.exists()) {
+            setError("Товар с таким SKU уже существует.");
+            return;
+         }
+
+         await setDoc(docRef, {
+            //
+            id: productData.sku, //удалить
+            //
+
+            ...productData, // все данные из формы
+            price: Number(productData.price), // цена в числовом формате
+            rating: null, // рейтинг по умолчанию
+            purchase: null, // закупочная цена по умолчанию
+            discount: 0, // скидка 0 по умолчанию
+            markup: 0, // наценка 0 по умолчанию
+            stock: true, // в наличии
+            ordersCount: 0, // 0 заказов
+            subcategory: "", // подкатегория пустая
+            mainImage: productData.images[0], // главное изображение — первое
+         });
 
          setSuccess(true);
          alert("Товар добавлен!");
@@ -106,7 +121,7 @@ const ProductForm = () => {
             sku: "",
          });
 
-         if (fileInputRef.current) fileInputRef.current.value = "";
+         if (fileInputRef.current) fileInputRef.current.value = ""; // сбрасываем input
       } catch (err) {
          console.error("Ошибка при добавлении товара:", err);
          setError("Ошибка при добавлении товара.");
@@ -278,19 +293,33 @@ const ProductForm = () => {
                </div>
             </div>
 
-            <div className={styles["form__admin-products"]}>
-               <h4>
-                  <u>
-                     Управление карточеками - удаелние товара, редактор отзывов
-                     установка акций и тд . . .
-                  </u>
-               </h4>
-               <CustomButton
-                  className={styles["form__go-to-editor"]}
-                  onClick={() => navigate("/admin-products")}
-               >
-                  Перейти
-               </CustomButton>
+            <div>
+               <div className={styles["form__admin-products"]}>
+                  <h4>
+                     <u>
+                        Управление карточеками - удаелние товара, редактор
+                        отзывов установка акций и тд . . .
+                     </u>
+                  </h4>
+                  <CustomButton
+                     className={styles["form__go-to-editor"]}
+                     onClick={() => navigate("/admin-products")}
+                  >
+                     Перейти
+                  </CustomButton>
+               </div>
+               {/* Наценка товара */}
+               <div className={styles["form__admin-products"]}>
+                  <h4>
+                     <u>Установка наценки на товары (markup %)</u>
+                  </h4>
+                  <CustomButton
+                     className={styles["form__go-to-editor"]}
+                     onClick={() => navigate("/admin-markup")}
+                  >
+                     Перейти к наценке
+                  </CustomButton>
+               </div>
             </div>
          </div>
       </>

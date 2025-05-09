@@ -7,6 +7,7 @@ import { BsCartDash, BsCartCheck } from "react-icons/bs";
 import { FaSave } from "react-icons/fa";
 
 import styles from "./ProductCardMini.module.css";
+import ProductPrice from "../FinalPrice/ProductPrice";
 
 const ProductCardMini = ({
    item,
@@ -24,15 +25,14 @@ const ProductCardMini = ({
    const favorites = useSelector((state) => state.favorite.items);
    const isFavorite = favorites.some((fav) => fav.productId === item.id);
 
-   const hasDiscount = item.discount > 0;
-   const discountedPrice = hasDiscount
-      ? Math.floor(item.price * (1 - item.discount / 100))
-      : item.price;
-
    return (
       <li className={styles.card}>
          {/* переход на детали продукта */}
-         <Link to={`/product/${item.id}`} className={styles.link}>
+         <Link
+            to={`/product/${item.id}`}
+            className={styles.link}
+            onClick={() => window.scrollTo(0, 0)}
+         >
             <div className={styles.imgWrap}>
                <img
                   src={item.images?.[0] || item.imageUrl || "/logo.png"}
@@ -93,23 +93,7 @@ const ProductCardMini = ({
 
          {/* Цена и скидка */}
          <div className={styles.bottomRow}>
-            <div className={styles.priceBox}>
-               {/* старая цена, перечёркнутая */}
-               {hasDiscount && (
-                  <span className={styles.oldPrice}>
-                     {item.price.toLocaleString("uk-UA")} ₴
-                  </span>
-               )}
-
-               {/* новая цена красная */}
-               <span
-                  className={
-                     hasDiscount ? styles.discountPrice : styles.normalPrice
-                  }
-               >
-                  {discountedPrice.toLocaleString("uk-UA")} ₴
-               </span>
-            </div>
+            <ProductPrice product={item} />
 
             {/* Избранное */}
             <span

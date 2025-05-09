@@ -6,6 +6,7 @@ import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import AdminRoute from "../components/AdminRoute/AdminRoute";
 import AdminOrdersPage from "../pages/AdminOrdersPage/AdminOrdersPage";
 import AdminProductsPage from "../pages/AdminProductsPage/AdminProductsPage";
+import AdminMarkupSetter from "../pages/AdminMarkupSetter/AdminMarkupSetter";
 
 const AppRoutes = () => {
    return (
@@ -18,6 +19,16 @@ const AppRoutes = () => {
                element={
                   <AdminRoute>
                      <ProductForm />
+                  </AdminRoute>
+               }
+            />
+
+            {/* Наценка товара */}
+            <Route
+               path="admin-markup"
+               element={
+                  <AdminRoute>
+                     <AdminMarkupSetter />
                   </AdminRoute>
                }
             />
